@@ -612,6 +612,19 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
   .tile.row .row-main{order:1}
   .row-facts{order:2;flex-direction:row;flex-wrap:wrap;gap:1.2rem;padding-top:.8rem;border-top:1px solid var(--grout)}
 }
+
+/* ---------- related links ---------- */
+.plinks{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.plinks-h{flex-basis:100%;font-size:.85rem;color:var(--muted)}
+.plink{display:inline-flex;align-items:center;gap:.35rem;font-size:.9rem;color:var(--ink);text-decoration:none;border:1px solid var(--grout);background:var(--paper);padding:.25rem .6rem;max-width:100%;overflow-wrap:anywhere}
+.plink:hover{border-color:var(--red);color:var(--red)}
+.plink svg{flex:none}
+.dl-links{margin-top:1.4rem}
+@media (prefers-reduced-motion:no-preference){.face.back.reveal .dl-links,.face.back.reveal .dl-rep{animation:slideIn .7s .35s cubic-bezier(.2,.8,.2,1) backwards}}
+.dl-links .plinks-h{flex-basis:auto;margin-inline-end:.4rem}
+.links-ed{margin-top:.8rem}
+.links-ed .lbl{display:block;font-size:.85rem;color:var(--muted)}
+.links-ed p{margin:.2rem 0 0;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere;direction:ltr;text-align:right}
 </style>
 </head>
 <body>
@@ -1243,7 +1256,8 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
         summaryLine(it, path, "summary") +
         ed("p", path + ".desc", it.desc, "desc", "הסבר מורחב על הפרויקט") +
         budgetBlock(it, path, "budget") +
-        etaBlock(it, path, "eta") + "</article>";
+        etaBlock(it, path, "eta") +
+        '<div class="links-ed"><span class="lbl">קישורים</span>' + ed("p", path + ".links", it.links, "", "קישור בכל שורה – שם | https://…") + "</div></article>";
     }
     if (mode === "compact") {
       return '<button type="button" class="tile" data-open="' + si + "-" + ii + '" aria-haspopup="dialog"' + st + ">" +
@@ -1326,7 +1340,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     (d.reports || []).forEach(function (r) { r.entries.forEach(function (e) { if (e.pid) e.name = entryName(e); }); });
   }
   function newProject(si) {
-    var it = { id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budgetOnce: "", budgetMonthly: "", done: "", todo: "", next: "", img: "pattern" };
+    var it = { id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budgetOnce: "", budgetMonthly: "", done: "", todo: "", next: "", links: "", img: "pattern" };
     data.sections[si].items.push(it);
     return it;
   }
@@ -1541,6 +1555,25 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
   }
 
 
+
+  /* ---------- related links: one per line, "name | url" or just a url ---------- */
+  function parseLinks(t) {
+    return String(t || "").split(/\n+/).map(function (l) {
+      l = l.trim(); if (!l) return null;
+      var parts = l.split("|"), url = parts.pop().trim(), name = parts.join("|").trim();
+      if (!/^https?:\/\//i.test(url)) { if (/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(url)) url = "https://" + url; else return null; }
+      try { var u = new URL(url); if (!name) name = u.hostname.replace(/^www\./, ""); return { name: name, url: u.href }; } catch (e) { return null; }
+    }).filter(Boolean);
+  }
+  var EXT = '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5H2.5v7h7v-2M7 2.5h2.5V5M9.5 2.5 5.5 6.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>';
+  function linksHTML(it, cls) {
+    var L = parseLinks(it.links);
+    if (!L.length) return "";
+    return '<div class="plinks ' + (cls || "") + '"><span class="plinks-h">קישורים</span>' + L.map(function (l) {
+      return '<a class="plink" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.name) + EXT + "</a>";
+    }).join("") + "</div>";
+  }
+
   /* ---------- full detail: one wide row per project, latest report laid out in three columns ---------- */
   var board = false;
   function latestBy(pid) {
@@ -1562,7 +1595,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     var facts = (it.eta || it.etaNote ? '<div class="eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
       (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") + '<div class="budget">' + budgetRows(it, "") + "</div>";
     return '<article class="tile row clickable" data-open="' + si + "-" + ii + '" tabindex="0" role="button" aria-haspopup="dialog"' + st + ">" +
-      '<div class="row-side">' + artHTML(it) + '<div class="row-facts">' + facts + "</div></div>" +
+      '<div class="row-side">' + artHTML(it) + '<div class="row-facts">' + facts + linksHTML(it) + "</div></div>" +
       '<div class="row-main"><div class="row-head"><h3 class="name">' + esc(it.name) + "</h3>" + (own ? updHead(own) : "") + "</div>" +
       (it.summary ? '<p class="row-sum">' + esc(it.summary) + "</p>" : "") +
       (own ? (own.e.snap ? '<p class="row-snap">' + esc(own.e.snap) + "</p>" : "") + cols3(own.e)
@@ -1746,7 +1779,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
         (it.summary ? '<p class="dl-sum">' + esc(it.summary) + "</p>" : "") +
         '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
           (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
-        '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
+        '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" + linksHTML(it, "dl-links") +
         (it.desc ? '<p class="dl-desc sc-desc"><span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span></p>" : "") +
         projReportHTML(x) +
         (last && x.s.note ? '<p class="sc-note">' + esc(x.s.note) + "</p>" : "") +
@@ -1953,6 +1986,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
       '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
         (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
       '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
+      linksHTML(it, "dl-links") +
       projReportHTML(x) +
       (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
       '<div class="dl-nav"><button type="button" data-nav="prev"' + (idx === 0 ? " disabled" : "") + ">" + svgArrow("right") + "הקודם</button>" +
@@ -2313,7 +2347,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     if (e.target.closest(".float-logo")) { e.preventDefault(); window.scrollTo({ top: 0, behavior: motion() ? "smooth" : "auto" }); return; }
     var sc = e.target.closest("[data-scene]");
     if (sc) { var tgt = document.getElementById("sc-" + sc.getAttribute("data-scene")); if (tgt) tgt.scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" }); return; }
-    if (!editing && e.target.closest("details")) return;
+    if (!editing && e.target.closest("details, a.plink")) return;
     if (!editing) { var o = e.target.closest("[data-open]"); if (o) openCard(o.getAttribute("data-open")); return; }
     var b = e.target.closest("[data-act]");
     if (!b) return;
