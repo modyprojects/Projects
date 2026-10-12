@@ -625,6 +625,18 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
 .links-ed{margin-top:.8rem}
 .links-ed .lbl{display:block;font-size:.85rem;color:var(--muted)}
 .links-ed p{margin:.2rem 0 0;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere;direction:ltr;text-align:right}
+
+/* ---------- bullet-list editor ---------- */
+.ed-list{margin:0;padding-inline-start:1.25rem;line-height:1.65;font-size:.97rem;color:var(--ink-2)}
+ul.ed-list{list-style:disc}
+ol.ed-list{list-style:decimal}
+.ed-list li{padding:.15rem .3rem;outline:1px dashed transparent;outline-offset:1px;cursor:text;overflow-wrap:anywhere}
+.ed-list li+li{margin-top:.3rem}
+.ed-list li:hover{outline-color:var(--muted)}
+.ed-list li:focus{outline:1px solid var(--red);background:var(--tile-hover)}
+.ed-list li::marker{color:var(--muted)}
+.ed-list li:empty::before{content:attr(data-ph);color:var(--muted);opacity:.75}
+.c-done .ed-list li::marker{color:#2E9E47}.c-doing .ed-list li::marker{color:#D29922}.c-next .ed-list li::marker{color:var(--red)}
 </style>
 </head>
 <body>
@@ -1257,7 +1269,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
         ed("p", path + ".desc", it.desc, "desc", "הסבר מורחב על הפרויקט") +
         budgetBlock(it, path, "budget") +
         etaBlock(it, path, "eta") +
-        '<div class="links-ed"><span class="lbl">קישורים</span>' + ed("p", path + ".links", it.links, "", "קישור בכל שורה – שם | https://…") + "</div></article>";
+        '<div class="links-ed"><span class="lbl">קישורים</span>' + edList(path + ".links", it.links, "שם | https://… · Enter לקישור נוסף") + "</div></article>";
     }
     if (mode === "compact") {
       return '<button type="button" class="tile" data-open="' + si + "-" + ii + '" aria-haspopup="dialog"' + st + ">" +
@@ -1447,7 +1459,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
       '<button type="button" class="primary" data-ract="new">+ דיווח חדש</button>' + (r ? '<button type="button" data-ract="delrep">מחיקת הדיווח</button>' : "") + "</div>";
     if (!r) return h + '<p class="r-empty">עדיין אין דיווחים. לחץ על "דיווח חדש".</p>';
     var rp = "reports." + data.reports.indexOf(r);
-    h += '<p class="r-hint">כל שורה ברשימה היא פריט נפרד. "דיווח חדש" מעתיק את התחומים מהדיווח האחרון – "בוצע" מתרוקן, ו"בתהליך" ו"הבא בתור" נשארים לעדכון.</p>';
+    h += '<p class="r-hint">כל נקודה ברשימה היא פריט נפרד – Enter מוסיף נקודה חדשה, ו-Backspace בתחילת נקודה מאחד אותה עם הקודמת. "דיווח חדש" מעתיק את התחומים מהדיווח האחרון – "בוצע" מתרוקן, ו"בתהליך" ו"הבא בתור" נשארים לעדכון.</p>';
     h += '<div class="r-dates"><label>מתאריך <input type="date" data-rfield="from" value="' + esc(r.from) + '"></label><label>עד תאריך <input type="date" data-rfield="to" value="' + esc(r.to) + '"></label></div>';
     r.entries.forEach(function (e, i) {
       var ep = rp + ".entries." + i, n = r.entries.length;
@@ -1461,17 +1473,17 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
         (e.pid ? '<span class="r-synced">מסונכרן עם עמוד הפרויקטים</span>' : "") + "</header>" +
         '<div class="r-snap-ed"><span class="r-col-h">תמונת מצב</span>' + ed("p", ep + ".snap", e.snap, "", "משפט או שניים – איפה התחום עומד") + "</div>" +
         '<div class="r-cols">' + COLS.map(function (c) {
-          return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + ed("p", ep + "." + c[0], e[c[0]], "r-lines", "שורה לכל פריט") + "</div>";
+          return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + edList(ep + "." + c[0], e[c[0]], "כתוב פריט · Enter לפריט חדש") + "</div>";
         }).join("") + "</div></article>";
     });
     h += '<div class="r-addbar"><select data-raddsel aria-label="מה להוסיף">' + addOptions(r) + '</select><button type="button" class="r-add" data-ract="eadd">+ הוספה לדיווח</button></div>';
-    h += '<div class="r-block"><h4 class="r-bh">שורה תחתונה</h4>' + ed("p", rp + ".bottom", r.bottom, "r-lines", "שורה לכל נקודה (לא חובה)") + "</div>";
+    h += '<div class="r-block"><h4 class="r-bh">שורה תחתונה</h4>' + edList(rp + ".bottom", r.bottom, "נקודה (לא חובה) · Enter לנקודה חדשה") + "</div>";
     h += '<div class="r-block"><h4 class="r-bh">לדיון והכרעה</h4><div class="r-decs">' + r.decisions.map(function (d, i) {
       var dp = rp + ".decisions." + i;
       return '<div class="r-dec' + (d.type === "החלטה" ? " dec" : "") + '" data-di="' + i + '"><div class="tile-tools"><button type="button" data-ract="dtype">' + esc(d.type) +
         '</button><button type="button" data-ract="ddel">מחיקה</button></div>' + ed("b", dp + ".title", d.title, "", "נושא") + ed("p", dp + ".text", d.text, "", "פירוט") + "</div>";
     }).join("") + '<button type="button" class="r-add" data-ract="dadd">+ הוספת נושא</button></div></div>';
-    h += '<div class="r-block"><h4 class="r-bh">מה הלאה – השבועיים הבאים</h4>' + ed("p", rp + ".next", r.next, "r-lines", "שורה לכל משימה") + "</div>";
+    h += '<div class="r-block"><h4 class="r-bh">מה הלאה – השבועיים הבאים</h4>' + edList(rp + ".next", r.next, "משימה · Enter למשימה חדשה", true) + "</div>";
     return h;
   }
   function reportsHTML() {
@@ -2408,16 +2420,93 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     var o = e.target.closest && e.target.closest("article[data-open], .tl-row[data-open]");
     if (o && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openCard(o.getAttribute("data-open")); }
   });
+
+  /* ---------- bullet-list editor: every item is its own line, so items stay visible while editing ---------- */
+  function edList(path, value, ph, ordered) {
+    var L = lines(value), tag = ordered ? "ol" : "ul";
+    if (!L.length) L = [""];
+    return "<" + tag + ' class="ed-list" data-lf="' + path + '">' + L.map(function (x) {
+      return '<li contenteditable="plaintext-only" spellcheck="true" data-ph="' + esc(ph) + '">' + esc(x) + "</li>";
+    }).join("") + "</" + tag + ">";
+  }
+  function syncList(list) {
+    setPath(list.getAttribute("data-lf"), Array.prototype.map.call(list.children, function (li) {
+      return li.textContent.replace(/ /g, " ").replace(/\s*\n\s*/g, " ").trim();
+    }).filter(Boolean).join("\n"));
+  }
+  function caretOffset(li) {
+    var sel = window.getSelection();
+    if (!sel.rangeCount) return 0;
+    var r = sel.getRangeAt(0), pre = document.createRange();
+    pre.selectNodeContents(li); pre.setEnd(r.startContainer, r.startOffset);
+    return pre.toString().length;
+  }
+  function placeCaret(li, off) {
+    li.focus();
+    var t = li.firstChild, r = document.createRange(), sel = window.getSelection();
+    if (t && t.nodeType === 3) r.setStart(t, Math.min(off, t.length)); else r.setStart(li, 0);
+    r.collapse(true); sel.removeAllRanges(); sel.addRange(r);
+  }
+  function newLi(after, text) {
+    var li = document.createElement("li");
+    li.setAttribute("contenteditable", "plaintext-only"); li.setAttribute("spellcheck", "true");
+    li.setAttribute("data-ph", after.getAttribute("data-ph") || "");
+    li.textContent = text || "";
+    after.parentNode.insertBefore(li, after.nextSibling);
+    return li;
+  }
+  app.addEventListener("keydown", function (e) {
+    var li = e.target.closest && e.target.closest(".ed-list li");
+    if (!li) return;
+    var list = li.parentNode, sel = window.getSelection();
+    if (e.key === "Enter" && !e.isComposing) {
+      e.preventDefault();
+      var off = caretOffset(li), txt = li.textContent;
+      li.textContent = txt.slice(0, off);
+      placeCaret(newLi(li, txt.slice(off)), 0);
+      syncList(list);
+    } else if (e.key === "Backspace" && sel.isCollapsed && caretOffset(li) === 0 && li.previousElementSibling) {
+      e.preventDefault();
+      var prev = li.previousElementSibling, at = prev.textContent.length;
+      prev.textContent = prev.textContent + li.textContent; li.remove();
+      placeCaret(prev, at); syncList(list);
+    } else if (e.key === "ArrowUp" && li.previousElementSibling && caretOffset(li) === 0) {
+      e.preventDefault(); placeCaret(li.previousElementSibling, li.previousElementSibling.textContent.length);
+    } else if (e.key === "ArrowDown" && li.nextElementSibling && caretOffset(li) === li.textContent.length) {
+      e.preventDefault(); placeCaret(li.nextElementSibling, 0);
+    }
+  });
+
   app.addEventListener("input", function (e) {
+    var eli = e.target.closest && e.target.closest(".ed-list li");
+    if (eli) { syncList(eli.parentNode); return; }
     var f = e.target.closest("[data-f]"); if (!f) return;
     setPath(f.getAttribute("data-f"), f.innerText.replace(/\u00a0/g, " ").replace(/\n{3,}/g, "\n\n").trim());
   });
   app.addEventListener("paste", function (e) {
+    var pli = e.target.closest && e.target.closest(".ed-list li");
+    if (pli && e.clipboardData) {
+      e.preventDefault();
+      var parts = e.clipboardData.getData("text/plain").split(/\r?\n/).map(function (x) { return x.replace(/^\s*(?:[-•*·▪●]|\d+[.)])\s*/, "").trim(); }).filter(Boolean);
+      if (!parts.length) return;
+      document.execCommand("insertText", false, parts[0]);
+      var cur = pli;
+      parts.slice(1).forEach(function (t) { cur = newLi(cur, t); });
+      if (cur !== pli) placeCaret(cur, cur.textContent.length);
+      syncList(pli.parentNode);
+      return;
+    }
     var f = e.target.closest("[data-f]"); if (!f || !e.clipboardData) return;
     e.preventDefault();
     document.execCommand("insertText", false, e.clipboardData.getData("text/plain"));
   });
   app.addEventListener("blur", function (e) {
+    var bli = e.target.closest && e.target.closest(".ed-list li");
+    if (bli) {
+      var bl = bli.parentNode;
+      if (!bli.textContent.trim()) { if (bl.children.length > 1) bli.remove(); else bli.textContent = ""; }
+      return;
+    }
     var f = e.target.closest && e.target.closest("[data-f]");
     if (f && !f.textContent.trim()) f.textContent = "";
   }, true);
