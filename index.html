@@ -630,7 +630,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
 .ed-list{margin:0;padding-inline-start:1.25rem;line-height:1.65;font-size:.97rem;color:var(--ink-2)}
 ul.ed-list{list-style:disc}
 ol.ed-list{list-style:decimal}
-.ed-list li{padding:.15rem .3rem;outline:1px dashed transparent;outline-offset:1px;cursor:text;overflow-wrap:anywhere}
+.ed-list li{white-space:pre-wrap;padding:.15rem .3rem;outline:1px dashed transparent;outline-offset:1px;cursor:text;overflow-wrap:anywhere}
 .ed-list li+li{margin-top:.3rem}
 .ed-list li:hover{outline-color:var(--muted)}
 .ed-list li:focus{outline:1px solid var(--red);background:var(--tile-hover)}
@@ -1313,7 +1313,8 @@ ol.ed-list{list-style:decimal}
     return [all[all.length - 1]];
   }
   function lines(t) { return String(t || "").split(/\n+/).map(function (x) { return x.trim(); }).filter(Boolean); }
-  function ul(t, cls) { var l = lines(t); return l.length ? '<ul class="r-ul ' + (cls || "") + '">' + l.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : ""; }
+  function itemHTML(x) { return esc(x).replace(/\u2028/g, "<br>"); }
+  function ul(t, cls) { var l = lines(t); return l.length ? '<ul class="r-ul ' + (cls || "") + '">' + l.map(function (x) { return "<li>" + itemHTML(x) + "</li>"; }).join("") + "</ul>" : ""; }
   var EMPTY = '<p class="r-empty">—</p>';
   function stDot(s) { return s && ST[s] ? '<i class="st-dot ' + s + '" title="' + ST[s] + '"></i>' : ""; }
   function stPill(s) { return s && ST[s] ? '<span class="r-st ' + s + '">' + ST[s] + "</span>" : ""; }
@@ -1397,7 +1398,7 @@ ol.ed-list{list-style:decimal}
       return '<div class="r-dec' + (d.type === "החלטה" ? " dec" : "") + '"><span class="r-dtype">' + esc(d.type) + "</span><b>" + esc(d.title) + "</b>" + (d.text ? "<p>" + esc(d.text) + "</p>" : "") + "</div>";
     }).join("") + "</div></div>";
     if (!label && lines(r.next).length) h += '<div class="r-block"><h4 class="r-bh">מה הלאה – השבועיים הבאים</h4><ol class="r-next">' +
-      lines(r.next).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+      lines(r.next).map(function (x) { return "<li>" + itemHTML(x) + "</li>"; }).join("") + "</ol></div>";
     return h;
   }
   function reportOne(r) {
@@ -1432,7 +1433,7 @@ ol.ed-list{list-style:decimal}
     list.slice().reverse().forEach(function (r) { h += extrasHTML(r, true); });
     var lastR = list[list.length - 1];
     if (lines(lastR.next).length) h += '<div class="r-block"><h4 class="r-bh">מה הלאה <span class="r-pl">מהדיווח ' + repLabel(lastR) + '</span></h4><ol class="r-next">' +
-      lines(lastR.next).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+      lines(lastR.next).map(function (x) { return "<li>" + itemHTML(x) + "</li>"; }).join("") + "</ol></div>";
     return h;
   }
 
@@ -1459,7 +1460,7 @@ ol.ed-list{list-style:decimal}
       '<button type="button" class="primary" data-ract="new">+ דיווח חדש</button>' + (r ? '<button type="button" data-ract="delrep">מחיקת הדיווח</button>' : "") + "</div>";
     if (!r) return h + '<p class="r-empty">עדיין אין דיווחים. לחץ על "דיווח חדש".</p>';
     var rp = "reports." + data.reports.indexOf(r);
-    h += '<p class="r-hint">כל נקודה ברשימה היא פריט נפרד – Enter מוסיף נקודה חדשה, ו-Backspace בתחילת נקודה מאחד אותה עם הקודמת. "דיווח חדש" מעתיק את התחומים מהדיווח האחרון – "בוצע" מתרוקן, ו"בתהליך" ו"הבא בתור" נשארים לעדכון.</p>';
+    h += '<p class="r-hint">כל נקודה ברשימה היא פריט נפרד – Enter מוסיף נקודה חדשה, Shift+Enter יורד שורה בתוך אותה נקודה, ו-Backspace בתחילת נקודה מאחד אותה עם הקודמת. "דיווח חדש" מעתיק את התחומים מהדיווח האחרון – "בוצע" מתרוקן, ו"בתהליך" ו"הבא בתור" נשארים לעדכון.</p>';
     h += '<div class="r-dates"><label>מתאריך <input type="date" data-rfield="from" value="' + esc(r.from) + '"></label><label>עד תאריך <input type="date" data-rfield="to" value="' + esc(r.to) + '"></label></div>';
     r.entries.forEach(function (e, i) {
       var ep = rp + ".entries." + i, n = r.entries.length;
@@ -2426,12 +2427,12 @@ ol.ed-list{list-style:decimal}
     var L = lines(value), tag = ordered ? "ol" : "ul";
     if (!L.length) L = [""];
     return "<" + tag + ' class="ed-list" data-lf="' + path + '">' + L.map(function (x) {
-      return '<li contenteditable="plaintext-only" spellcheck="true" data-ph="' + esc(ph) + '">' + esc(x) + "</li>";
+      return '<li contenteditable="plaintext-only" spellcheck="true" data-ph="' + esc(ph) + '">' + esc(x.replace(/\u2028/g, "\n")) + "</li>";
     }).join("") + "</" + tag + ">";
   }
   function syncList(list) {
     setPath(list.getAttribute("data-lf"), Array.prototype.map.call(list.children, function (li) {
-      return li.textContent.replace(/ /g, " ").replace(/\s*\n\s*/g, " ").trim();
+      return li.innerText.replace(/\u00a0/g, " ").replace(/\u200b/g, "").split("\n").map(function (x) { return x.trim(); }).filter(Boolean).join("\u2028");
     }).filter(Boolean).join("\n"));
   }
   function caretOffset(li) {
@@ -2459,11 +2460,19 @@ ol.ed-list{list-style:decimal}
     var li = e.target.closest && e.target.closest(".ed-list li");
     if (!li) return;
     var list = li.parentNode, sel = window.getSelection();
-    if (e.key === "Enter" && !e.isComposing) {
+    if (e.key === "Enter" && e.shiftKey && !e.isComposing) {
+      e.preventDefault();
+      /* a trailing newline only shows once something follows it, hence the zero-width placeholder */
+      var atEnd = caretOffset(li) >= li.textContent.replace(/\u200b/g, "").length, rg = sel.getRangeAt(0);
+      rg.deleteContents();
+      var tn = document.createTextNode(atEnd ? "\n\u200b" : "\n");
+      rg.insertNode(tn); rg.setStart(tn, 1); rg.collapse(true); sel.removeAllRanges(); sel.addRange(rg);
+      syncList(list);
+    } else if (e.key === "Enter" && !e.isComposing) {
       e.preventDefault();
       var off = caretOffset(li), txt = li.textContent;
-      li.textContent = txt.slice(0, off);
-      placeCaret(newLi(li, txt.slice(off)), 0);
+      li.textContent = txt.slice(0, off).replace(/\u200b/g, "").replace(/\n+$/, "");
+      placeCaret(newLi(li, txt.slice(off).replace(/\u200b/g, "").replace(/^\n+/, "")), 0);
       syncList(list);
     } else if (e.key === "Backspace" && sel.isCollapsed && caretOffset(li) === 0 && li.previousElementSibling) {
       e.preventDefault();
