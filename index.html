@@ -579,6 +579,39 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
 @media (min-width:760px){body.scrolled .toolbar .wrap{padding-inline-start:calc(clamp(1.1rem,4vw,3rem) + 130px)}}
 @media (max-width:759px){.float-logo{top:0;inset-inline:0;padding:9px 16px;box-shadow:0 1px 0 var(--grout),0 4px 12px rgba(0,0,0,.08)}.float-logo .logo{width:80px}}
 @media print{.float-logo{display:none!important}}
+
+/* ---------- full detail board ---------- */
+.mode-board .wall{grid-template-columns:1fr;gap:clamp(16px,2vw,24px)}
+.mode-board .tile{--lean:1.2deg}
+.tile.row{flex-direction:row;gap:clamp(1rem,2.4vw,2rem);align-items:stretch;padding-bottom:calc(var(--pad) + .6rem)}
+.tile.row .row-side{flex:0 0 clamp(210px,24%,290px);display:flex;flex-direction:column;gap:1rem;min-width:0}
+.tile.row .row-side>.art{margin-block-start:calc(-1 * var(--pad));margin-inline-start:calc(-1 * var(--pad));aspect-ratio:4/3}
+.row-facts{display:flex;flex-direction:column;gap:.8rem}
+.tile.row .eta{margin:0;padding:0;border:0}
+.tile.row .budget{margin:0}
+.row-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:.8rem}
+.row-head{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem}
+.tile.row .name{font-size:clamp(1.25rem,1.9vw,1.5rem);font-weight:600;margin-inline-end:auto}
+.row-when{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--muted)}
+.row-sum{margin:0;font-weight:600}
+.row-snap{margin:0;font-size:1.02rem;line-height:1.65;padding:.65rem .9rem;background:var(--tile-hover);border-inline-start:2px solid var(--red);white-space:pre-line}
+.row-cols{gap:clamp(.8rem,1.6vw,1.4rem)}
+.row-cols .r-ul{font-size:.95rem}
+.cnt{display:inline-block;min-width:1.4em;margin-inline-start:.45rem;padding:0 .35rem;font-size:.75rem;font-weight:600;line-height:1.5;text-align:center;background:var(--grout);color:var(--ink)}
+.row-none{margin:0;color:var(--muted);font-size:.95rem}
+.row-about{border-top:1px solid var(--grout);padding-top:.6rem}
+.row-about summary{cursor:pointer;color:var(--muted);font-size:.92rem;width:max-content}
+.row-about summary:hover{color:var(--ink)}
+.row-about p{margin:.5rem 0 0;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+.sec-update{background:var(--tile);border:1px solid var(--grout);padding:1rem 1.2rem 1.2rem;margin:.4rem 0 1.2rem;display:flex;flex-direction:column;gap:.8rem}
+.sec-update .row-head b{font-weight:600;margin-inline-end:auto}
+@media (max-width:760px){
+  .tile.row{flex-direction:column}
+  .tile.row .row-side{display:contents}
+  .tile.row .row-side>.art{order:0;margin-inline-end:calc(-1 * var(--pad));aspect-ratio:16/8}
+  .tile.row .row-main{order:1}
+  .row-facts{order:2;flex-direction:row;flex-wrap:wrap;gap:1.2rem;padding-top:.8rem;border-top:1px solid var(--grout)}
+}
 </style>
 </head>
 <body>
@@ -1216,6 +1249,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
       return '<button type="button" class="tile" data-open="' + si + "-" + ii + '" aria-haspopup="dialog"' + st + ">" +
         artHTML(it) + '<span class="name">' + esc(it.name) + '</span>' + MARK + '</button>';
     }
+    if (board) return rowHTML(it, si, ii, st);
     return '<article class="tile clickable" data-open="' + si + "-" + ii + '" tabindex="0" role="button" aria-haspopup="dialog"' + st + ">" +
       artHTML(it) + '' + MARK + '<h3 class="name">' + esc(it.name) + "</h3>" +
       summaryLine(it, path, "summary") + tileUpdate(it, data.sections[si].id) +
@@ -1506,6 +1540,43 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
       (cols.length ? '<div class="status">' + cols.map(function (c) { return '<div class="st st-' + c[0] + '"><span class="st-h">' + c[1] + "</span>" + ul(hit.e[c[0]]) + "</div>"; }).join("") + "</div>" : "") + "</div>";
   }
 
+
+  /* ---------- full detail: one wide row per project, latest report laid out in three columns ---------- */
+  var board = false;
+  function latestBy(pid) {
+    var hit = null;
+    reps().forEach(function (r) { r.entries.forEach(function (e) { if (e.pid === pid) hit = { r: r, e: e }; }); });
+    return hit;
+  }
+  function cols3(e) {
+    return '<div class="r-cols row-cols">' + COLS.map(function (c) {
+      var n = lines(e[c[0]]).length;
+      return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + (n ? '<span class="cnt">' + n + "</span>" : "") + "</span>" + (ul(e[c[0]]) || EMPTY) + "</div>";
+    }).join("") + "</div>";
+  }
+  function updHead(hit) {
+    return '<span class="row-when">' + stDot(hit.e.status) + "עדכון אחרון · דיווח " + repLabel(hit.r, true) + "</span>" + stPill(hit.e.status);
+  }
+  function rowHTML(it, si, ii, st) {
+    var own = latestBy(it.id), grp = own ? null : latestBy(data.sections[si].id);
+    var facts = (it.eta || it.etaNote ? '<div class="eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
+      (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") + '<div class="budget">' + budgetRows(it, "") + "</div>";
+    return '<article class="tile row clickable" data-open="' + si + "-" + ii + '" tabindex="0" role="button" aria-haspopup="dialog"' + st + ">" +
+      '<div class="row-side">' + artHTML(it) + '<div class="row-facts">' + facts + "</div></div>" +
+      '<div class="row-main"><div class="row-head"><h3 class="name">' + esc(it.name) + "</h3>" + (own ? updHead(own) : "") + "</div>" +
+      (it.summary ? '<p class="row-sum">' + esc(it.summary) + "</p>" : "") +
+      (own ? (own.e.snap ? '<p class="row-snap">' + esc(own.e.snap) + "</p>" : "") + cols3(own.e)
+        : '<p class="row-none">' + (grp ? "העדכון מופיע בראש הקבוצה ↑" : "אין עדיין עדכון בדיווחים עבור הפרויקט הזה") + "</p>") +
+      (it.desc ? '<details class="row-about"><summary>על הפרויקט</summary><p>' + esc(it.desc) + "</p></details>" : "") +
+      "</div>" + MARK + "</article>";
+  }
+  function secUpdateHTML(s) {
+    var hit = latestBy(s.id);
+    if (!hit) return "";
+    return '<div class="sec-update"><div class="row-head"><b>עדכון לכל הקבוצה</b>' + updHead(hit) + "</div>" +
+      (hit.e.snap ? '<p class="row-snap">' + esc(hit.e.snap) + "</p>" : "") + cols3(hit.e) + "</div>";
+  }
+
   /* ---------- views ---------- */
   var VIEW_KEY = "mody-projects-view";
   var VIEWS = [["cards", "כרטיסיות"], ["mosaic", "פסיפס"], ["timeline", "ציר זמן"], ["story", "סיפור"]];
@@ -1540,7 +1611,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     var h = "";
     data.sections.forEach(function (s, si) {
       if (!editing && !s.items.length) return;
-      h += secOpen(s, si, editing ? secTools(s, si) : "") + '<div class="wall' + (anim ? " pending" : "") + '">';
+      h += secOpen(s, si, editing ? secTools(s, si) : board ? secUpdateHTML(s) : "") + '<div class="wall' + (anim ? " pending" : "") + '">';
       s.items.forEach(function (it, ii) { h += tileHTML(it, si, ii, s.items.length, ii); });
       if (editing) h += '<button type="button" class="tile add" data-act="add" data-si="' + si + '">+ הוספת פרויקט</button>';
       h += "</div>" + secClose(s, si);
@@ -1704,7 +1775,8 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
         (view === "cards" ? segHTML("רמת פירוט", [["compact", "שמות בלבד"], ["full", "פירוט מלא"]], mode, "data-mode") : "")) + "</div>" +
       "</div></div>";
 
-    var mainCls = "wrap view-" + v + (v === "cards" ? (showFull ? " mode-full" : " mode-compact") : "");
+    board = v === "cards" && !editing && mode === "full";
+    var mainCls = "wrap view-" + v + (v === "cards" ? (showFull ? " mode-full" : " mode-compact") + (board ? " mode-board" : "") : "");
     h += '<main class="' + mainCls + '">';
     if (v === "reports") h += reportsHTML();
     else if (v === "cards") h += cardsHTML(anim);
@@ -1823,7 +1895,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
   });
   function applyTilt() {
     tiltRaf = 0;
-    var e = tiltEv, t = e && e.target.closest && e.target.closest(".tile[data-open], .m-tile");
+    var e = tiltEv, t = e && e.target.closest && e.target.closest(".tile[data-open]:not(.row), .m-tile");
     if (tiltEl && tiltEl !== t) resetTilt(tiltEl);
     if (!t || t.closest(".pending")) { tiltEl = null; return; }
     tiltEl = t;
@@ -2241,6 +2313,7 @@ body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
     if (e.target.closest(".float-logo")) { e.preventDefault(); window.scrollTo({ top: 0, behavior: motion() ? "smooth" : "auto" }); return; }
     var sc = e.target.closest("[data-scene]");
     if (sc) { var tgt = document.getElementById("sc-" + sc.getAttribute("data-scene")); if (tgt) tgt.scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" }); return; }
+    if (!editing && e.target.closest("details")) return;
     if (!editing) { var o = e.target.closest("[data-open]"); if (o) openCard(o.getAttribute("data-open")); return; }
     var b = e.target.closest("[data-act]");
     if (!b) return;
