@@ -462,6 +462,26 @@ html.snap{scroll-snap-type:y proximity}
   .scene{min-height:auto;break-inside:avoid}
   .scene .sc-art,.scene .sc-meta,.scene .dl-eta,.scene .sc-note{clip-path:none!important;opacity:1!important}
 }
+
+.tile .summary{margin:.5rem 0 0;font-weight:600;color:var(--ink);line-height:1.5}
+.tile .budget{margin-top:.8rem}
+.budget .lbl{display:block;font-size:.85rem;color:var(--muted)}
+.budget .val{display:block;font-weight:600;font-size:1.05rem}
+.dl-sum{margin:1rem 0 0;font-size:clamp(1.1rem,1.7vw,1.3rem);font-weight:600;line-height:1.6}
+.dl-facts{display:flex;flex-wrap:wrap;gap:1rem 2.4rem}
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem}
+.st{padding:.9rem 1rem;border:1px solid var(--grout);border-top:3px solid var(--ink)}
+.st-done{border-top-color:#2E7D32}.st-todo{border-top-color:var(--red)}.st-next{border-top-color:var(--ink-2)}
+.st-h{display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem}
+.st-b{margin:0;line-height:1.7;white-space:pre-line;overflow-wrap:anywhere;font-size:.98rem;color:var(--ink-2)}
+.tile .status{grid-template-columns:1fr;margin-top:1rem}
+.login-dlg{border:1px solid var(--ink);background:var(--paper);color:var(--ink);padding:1.4rem;max-width:22rem;width:calc(100% - 2rem)}
+.login-dlg::backdrop{background:var(--scrim)}
+.login-dlg input{display:block;width:100%;margin:.6rem 0 1rem;padding:.6rem;font:inherit;border:1px solid var(--ink);background:var(--paper);color:var(--ink);box-sizing:border-box}
+.login-dlg .row{display:flex;gap:.5rem;justify-content:flex-end}
+.login-dlg button{font:inherit;padding:.5rem 1.1rem;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.login-dlg button.primary{background:var(--red);border-color:var(--red);color:#fff}
+@media (max-width:640px){.status{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -486,7 +506,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "מעבר מרכזיית הטלפוניה של החברה לאומניטלקום. המעבר יאפשר ניהול תורים חכם יותר, שילוב יכולות AI, וגמישות ושליטה גדולות יותר בידי MODY ולא בידי הספק. האפיון ועצי הניתוב הושלמו, ורכישת טלפונים נייחים לסניפים הועברה לחתימה. ממתינים להתקנת Firewall בסניפים (צפי: סוף השבוע) ולפגישת אפיון מסכמת עם הספק.",
      "eta": "נובמבר 2026",
      "etaNote": "",
-     "img": "pbx"
+     "img": "pbx",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "glassix",
@@ -494,7 +519,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "בוט שירות לקוחות בוואטסאפ ומערכת תפוצות (Sandix), באוויר מאז אפריל 2026. קיימים דוחות יומיים. דוחות שבועיים וחודשיים, וכן דשבורד מתעדכן לצפייה וניתוח נתונים (במקום דוחות אקסל), יהיו מוכנים עד סוף השבוע (8.10).",
      "eta": "סוף אוקטובר 2026",
      "etaNote": "",
-     "img": "glassix"
+     "img": "glassix",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "intelichain",
@@ -502,7 +532,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "מערכת חכמה לחיזוי וניהול מלאי (ספק חיצוני). שלב ה-POC הושלם. הדר העבירה ב-1.10 את פירוט הנתונים הנדרשים; אלי מכין אותם, בתוספת התאמות ל-MODY, ויעביר אותם עד הערב (5.10). לאחר מכן ייבחן המודל על הנתונים העדכניים.",
      "eta": "Q1 2027",
      "etaNote": "",
-     "img": "intelichain"
+     "img": "intelichain",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "specs",
@@ -510,7 +545,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "מערכת להפקת מפרטים וקטלוגים. זמן הפקת מפרט ירד מחצי יום עד יום עבודה לכ-15 דקות מקצה לקצה, וקטלוג מיוצא בלחיצת כפתור. עד כה הופקו 72 מפרטים ו-25 מפרטים לדירות לא מכורות, ו-5 מפרטים כבר נחתמו. העיצוב הסופי של הקטלוג והעימוד עדיין בעבודה. קבלן פירגן ביוזמתו על המפרט החדש: «הפורמט החדש ממש נוח ויפה – כל הכבוד».",
      "eta": "דצמבר 2026",
      "etaNote": "",
-     "img": "specs"
+     "img": "specs",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "portal",
@@ -518,7 +558,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "פורטל ייעודי לקבלנים. הגרסה הראשונית נבנתה על ידי דיאנה, והפורטל עבר לאחריות המחלקה: חובר למסד נתונים, נרכשה כתובת URL ייעודית, וניהול המערכת עבר לידינו.",
      "eta": "[להשלמה]",
      "etaNote": "",
-     "img": "portal"
+     "img": "portal",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "one",
@@ -526,7 +571,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "ריכוז ארבעה אפיונים והצעות מחיר מול ONE: פריסת הזמנה, תמ\"ש, מלקט ויבוא. בהמשך: ישיבת תעדוף ואישור תקציבי.",
      "eta": "תחילת נובמבר 2026",
      "etaNote": "סיום שלב האפיונים",
-     "img": "one"
+     "img": "one",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     }
    ]
   },
@@ -543,7 +593,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "הטמעת תהליך זימון הדיירים במערכת ה-CRM. האפיון הושלם והוצג למחלקה.",
      "eta": "אמצע נובמבר 2026",
      "etaNote": "",
-     "img": "crm1"
+     "img": "crm1",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "crm2",
@@ -551,7 +606,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "ניהול ומעקב פרויקטים במחלקת הפרויקטים (צוות דודי) במערכת ה-CRM. האפיון הושלם.",
      "eta": "אמצע דצמבר 2026",
      "etaNote": "תרחיש מאוחר: תחילת ינואר 2027",
-     "img": "crm2"
+     "img": "crm2",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "crm3",
@@ -559,7 +619,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "ניהול הקשר והמידע על אדריכלים ופעילות שיווקית מולם במערכת ה-CRM, כולל סנכרון מול ONE. האפיון הושלם.",
      "eta": "אמצע ינואר 2027",
      "etaNote": "תרחיש מאוחר: פברואר 2027",
-     "img": "crm3"
+     "img": "crm3",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     }
    ]
   },
@@ -576,7 +641,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "מערכת לניהול קריאות שירות ומעקב אחר טכנאי שטח עבור המחלקה הטכנית. תחילת עבודה בעוד שבוע–שבועיים, לאחר חפיפה וקליטת עובדים חדשים.",
      "eta": "אמצע נובמבר",
      "etaNote": "",
-     "img": "tech"
+     "img": "tech",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     },
     {
      "id": "qr",
@@ -584,7 +654,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "דפי נחיתה ייעודיים למוצרי הפרקט עם קודי QR פיזיים בתצוגה, ואוטומציה לפתיחת דפים חדשים.",
      "eta": "נובמבר–דצמבר 2026",
      "etaNote": "כחודש עבודה מרגע ההתנעה",
-     "img": "qr"
+     "img": "qr",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     }
    ]
   },
@@ -601,7 +676,12 @@ html.snap{scroll-snap-type:y proximity}
      "desc": "אוטומציה של דוחות הנוכחות החודשיים (חיסכון מוערך של כ-20 שעות בחודש). העבודה התקדמה משמעותית והפרויקט קרוב לסיום.",
      "eta": "מוקפא",
      "etaNote": "",
-     "img": "hr"
+     "img": "hr",
+     "summary": "",
+     "budget": "",
+     "done": "",
+     "todo": "",
+     "next": ""
     }
    ]
   }
@@ -614,6 +694,8 @@ html.snap{scroll-snap-type:y proximity}
   var HEAD = '<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
     '<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">\n';
+  var BACKEND = { url: "", key: "", doc: "main" };
+  var PASS = "";
   var MODE_KEY = "mody-projects-mode";
   var DRAFT_KEY = "mody-projects-draft";
   var EASE = "cubic-bezier(.2,.8,.2,1)";
@@ -650,7 +732,7 @@ html.snap{scroll-snap-type:y proximity}
   var mode = "compact";
   try { var m = localStorage.getItem(MODE_KEY); if (m === "full" || m === "compact") mode = m; } catch (e) {}
 
-  var editing = false, snapshot = null, canEdit = false, artifactApi = null, saving = false;
+  var editing = false, snapshot = null, saving = false;
   var introPlayed = false;
   var app = document.getElementById("app");
   var mqReduce = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
@@ -694,6 +776,23 @@ html.snap{scroll-snap-type:y proximity}
     return '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   }
 
+  var STATUS = [["done", "מה בוצע", "done"], ["todo", "מה נשאר לבצע", "todo"], ["next", "מה הלאה", "next"]];
+  function budgetBlock(it, path, cls) {
+    if (!editing) return '<div class="' + cls + '"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div>";
+    return '<div class="' + cls + '"><span class="lbl">תקציב</span>' + ed("span", path + ".budget", it.budget, "val", "תקציב (למשל ₪150,000)") + "</div>";
+  }
+  function summaryLine(it, path, cls) {
+    if (!editing && !it.summary) return "";
+    return ed("p", path + ".summary", it.summary, cls, "שורה אחת שמסבירה על הפרויקט");
+  }
+  function statusBlocks(it, path) {
+    if (!editing && !STATUS.some(function (x) { return it[x[0]]; })) return "";
+    return '<div class="status">' + STATUS.map(function (x) {
+      if (!editing && !it[x[0]]) return "";
+      return '<div class="st st-' + x[2] + '"><span class="st-h">' + x[1] + "</span>" + ed("p", path + "." + x[0], it[x[0]], "st-b", x[1]) + "</div>";
+    }).join("") + "</div>";
+  }
+
   function tileHTML(it, si, ii, total, k) {
     var path = "sections." + si + ".items." + ii;
     var st = ' style="--i:' + k + '"';
@@ -706,8 +805,10 @@ html.snap{scroll-snap-type:y proximity}
         '<button type="button" data-act="size" title="גודל האריח בתצוגת פסיפס">' + SIZES[sizeOf(it)] + "</button>" +
         '<button type="button" data-act="del">מחיקה</button></div>' + artHTML(it) +
         ed("h3", path + ".name", it.name, "name", "שם הפרויקט") +
-        ed("p", path + ".desc", it.desc, "desc", "הסבר קצר על הפרויקט") +
-        etaBlock(it, path, "eta") + "</article>";
+        summaryLine(it, path, "summary") +
+        ed("p", path + ".desc", it.desc, "desc", "הסבר מורחב על הפרויקט") +
+        budgetBlock(it, path, "budget") +
+        etaBlock(it, path, "eta") + statusBlocks(it, path) + "</article>";
     }
     if (mode === "compact") {
       return '<button type="button" class="tile" data-open="' + si + "-" + ii + '" aria-haspopup="dialog"' + st + ">" +
@@ -715,7 +816,9 @@ html.snap{scroll-snap-type:y proximity}
     }
     return '<article class="tile clickable" data-open="' + si + "-" + ii + '" tabindex="0" role="button" aria-haspopup="dialog"' + st + ">" +
       artHTML(it) + '' + MARK + '<h3 class="name">' + esc(it.name) + "</h3>" +
+      summaryLine(it, path, "summary") +
       (it.desc ? '<p class="desc">' + esc(it.desc) + "</p>" : "") +
+      budgetBlock(it, path, "budget") +
       etaBlock(it, path, "eta") + "</article>";
   }
 
@@ -882,9 +985,12 @@ html.snap{scroll-snap-type:y proximity}
         '<span class="sc-count">' + (x.ii + 1) + " מתוך " + x.s.items.length + "</span></div>" +
         (first && x.s.intro ? '<p class="sc-intro">' + esc(x.s.intro) + "</p>" : "") +
         '<h2 class="sc-name" id="sc-name-' + k + '">' + words(it.name, "w") + "</h2>" +
-        (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
+        (it.summary ? '<p class="dl-sum">' + esc(it.summary) + "</p>" : "") +
+        '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
           (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
+        '<div class="dl-eta dl-budget"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div></div>" +
         (it.desc ? '<p class="dl-desc sc-desc"><span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span></p>" : "") +
+        statusBlocks(it, "") +
         (last && x.s.note ? '<p class="sc-note">' + esc(x.s.note) + "</p>" : "") +
         "</div></section>";
       nav += '<button type="button" data-scene="' + k + '" aria-label="' + esc(it.name) + '"><span class="st-tip">' + esc(it.name) + "</span>" + MARK + "</button>";
@@ -1070,9 +1176,12 @@ html.snap{scroll-snap-type:y proximity}
       '<div class="dl-top"><span class="dl-sec">' + esc(x.s.title) + "</span>" +
       '<button type="button" class="dl-close" aria-label="סגירה"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.6"/></svg></button></div>' +
       '<h2 class="dl-name" id="fc-name">' + (typed ? words(it.name, "w") : esc(it.name)) + "</h2>" +
-      (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
+      (it.summary ? '<p class="dl-sum">' + esc(it.summary) + "</p>" : "") +
+      '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
         (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
+      '<div class="dl-eta dl-budget"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div></div>" +
       (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
+      statusBlocks(it, "") +
       '<div class="dl-nav"><button type="button" data-nav="prev"' + (idx === 0 ? " disabled" : "") + ">" + svgArrow("right") + "הקודם</button>" +
       '<span class="dl-pos">' + (idx + 1) + " מתוך " + total + "</span>" +
       '<button type="button" data-nav="next"' + (idx === total - 1 ? " disabled" : "") + ">הבא" + svgArrow("left") + "</button></div>" +
@@ -1239,8 +1348,62 @@ html.snap{scroll-snap-type:y proximity}
     o[parts[parts.length - 1]] = value;
     if (path === "title" || path === "subtitle") data.docTitle = data.title + " – " + data.subtitle + " | MODY";
   }
+  function sb(path, opts) {
+    opts = opts || {};
+    return fetch(BACKEND.url + "/rest/v1/" + path, {
+      method: opts.body ? "POST" : "GET",
+      headers: { apikey: BACKEND.key, Authorization: "Bearer " + BACKEND.key, "Content-Type": "application/json" },
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); });
+  }
+  function normalize(d) {
+    d.sections.forEach(function (s) { s.items.forEach(function (it) {
+      ["summary", "budget", "done", "todo", "next"].forEach(function (k) { if (it[k] == null) it[k] = ""; });
+    }); });
+    return d;
+  }
+  function loadRemote() {
+    if (!BACKEND.url) return;
+    sb("project_docs?id=eq." + BACKEND.doc + "&select=data").then(function (rows) {
+      if (!rows.length || !rows[0].data || !rows[0].data.sections) return;
+      var d = normalize(rows[0].data);
+      if (JSON.stringify(d) === JSON.stringify(data)) return;
+      data = d;
+      if (!editing && !(dlg && dlg.open)) render();
+    }).catch(function () {});
+  }
+  function askPass() {
+    return new Promise(function (resolve) {
+      var d = document.createElement("dialog");
+      d.className = "login-dlg";
+      d.innerHTML = '<form method="dialog"><label>סיסמת עריכה<input type="password" autocomplete="current-password" required></label>' +
+        '<div class="row"><button type="button" data-x>ביטול</button><button class="primary">כניסה</button></div></form>';
+      document.body.appendChild(d);
+      var inp = d.querySelector("input"), done = false;
+      function fin(v) { if (done) return; done = true; d.close(); d.remove(); resolve(v); }
+      d.querySelector("[data-x]").onclick = function () { fin(null); };
+      d.addEventListener("cancel", function () { fin(null); });
+      d.querySelector("form").onsubmit = function () { fin(inp.value); };
+      d.showModal(); inp.focus();
+    });
+  }
+  function unlock() {
+    if (!BACKEND.url) { toast("העריכה תהיה זמינה לאחר חיבור מסד הנתונים"); return Promise.resolve(false); }
+    if (PASS) return Promise.resolve(true);
+    return askPass().then(function (p) {
+      if (!p) return false;
+      return sb("rpc/check_edit_pass", { body: { p: p } }).then(function (ok) {
+        if (ok === true) { PASS = p; return true; }
+        toast("סיסמה שגויה"); return false;
+      }, function () { toast("שגיאת חיבור"); return false; });
+    });
+  }
   function enterEdit() {
-    if (!canEdit || editing) return;
+    if (editing) return;
+    unlock().then(function (ok) { if (ok) startEdit(); });
+  }
+  function startEdit() {
+    if (editing) return;
     if (dlg && dlg.open) { busy = false; closeCard(); }
     snapshot = JSON.stringify(data);
     editing = true; render();
@@ -1266,26 +1429,13 @@ html.snap{scroll-snap-type:y proximity}
   }
 
   function save() {
-    if (saving) return;
-    if (!artifactApi) { toast("השמירה זמינה רק בדף המפורסם ב-claude.ai"); return; }
-    var html = buildDocument(data);
-    try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify(data)); } catch (e) {}
+    if (saving || !PASS) return;
     saving = true; render();
-    artifactApi.publish(html).then(function () {
-      try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {}
-      saving = false; snapshot = JSON.stringify(data); toast("נשמר. הדף נטען מחדש עם הגרסה החדשה");
-    }, function (err) {
-      saving = false;
-      var code = err && err.code;
-      if (code === "conflict") { toast("נשמרה גרסה חדשה יותר בינתיים. הדף נטען מחדש, והטיוטה שלך תשוחזר"); return; }
-      if (code === "not_writer" || code === "not_granted" || code === "not_declared" || code === "consent_required" ||
-          code === "capability_disabled" || code === "capability_removed") {
-        canEdit = false; try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {}
-        exitEdit(true); toast("לדף הזה אין הרשאת שמירה"); return;
-      }
-      render();
-      if (code === "rate_limited") toast("יותר מדי שמירות ברצף. נסה שוב בעוד דקה");
-      else if (code === "too_large") toast("הדף גדול מדי לשמירה. קצר טקסטים ונסה שוב");
+    sb("rpc/save_project_doc", { body: { p: PASS, d: normalize(JSON.parse(JSON.stringify(data))), doc: BACKEND.doc } }).then(function () {
+      saving = false; editing = false; snapshot = null; render(); toast("נשמר");
+    }, function (code) {
+      saving = false; render();
+      if (code === 401 || code === 403) { PASS = ""; toast("הסיסמה לא תקפה. היכנס שוב לעריכה"); }
       else toast("השמירה נכשלה. נסה שוב");
     });
   }
@@ -1328,7 +1478,7 @@ html.snap{scroll-snap-type:y proximity}
     if (act === "cancel") return exitEdit(true);
     if (act === "add") {
       var si = +b.getAttribute("data-si");
-      data.sections[si].items.push({ id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", img: "pattern" });
+      data.sections[si].items.push({ id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budget: "", done: "", todo: "", next: "", img: "pattern" });
       render();
       var tiles = app.querySelectorAll('.tile[data-si="' + si + '"] .name');
       var last = tiles[tiles.length - 1]; if (last) last.focus();
@@ -1382,26 +1532,9 @@ html.snap{scroll-snap-type:y proximity}
   });
   window.addEventListener("resize", function () { placeSegInk(false); });
 
-  /* ---------- capabilities (light up later; page works without them) ---------- */
-  function initCaps() {
-    if (!window.claude || typeof window.claude.use !== "function") return;
-    window.claude.use("user").then(function (u) { return u ? u.canEdit() : false; }).then(function (v) {
-      canEdit = !!v;
-      if (!canEdit) return;
-      return window.claude.use("artifact").then(function (a) { artifactApi = a; restoreDraft(); });
-    }).catch(function () {});
-  }
-  function restoreDraft() {
-    var d = null;
-    try { d = sessionStorage.getItem(DRAFT_KEY); } catch (e) {}
-    if (!d) return;
-    if (d === JSON.stringify(JSON.parse(embedded))) { try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {} return; }
-    try { snapshot = JSON.stringify(JSON.parse(embedded)); data = JSON.parse(d); editing = true; render(); toast("טיוטה שלא נשמרה שוחזרה"); } catch (e) {}
-  }
-
   render();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeSegInk(false); });
-  initCaps();
+  loadRemote();
 })();
 </script>
 </body>
