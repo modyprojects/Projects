@@ -465,8 +465,11 @@ html.snap{scroll-snap-type:y proximity}
 
 .tile .summary{margin:.5rem 0 0;font-weight:600;color:var(--ink);line-height:1.5}
 .tile .budget{margin-top:.8rem}
-.budget .lbl{display:block;font-size:.85rem;color:var(--muted)}
-.budget .val{display:block;font-weight:600;font-size:1.05rem}
+.b-row+.b-row{margin-top:.5rem}
+.b-row .lbl{display:block;font-size:.85rem;color:var(--muted)}
+.b-row .val{display:block;font-weight:600;font-size:1.05rem}
+.dl-budget .b-row .val{font-size:1.3rem}
+.dl-eta.dl-budget .lbl{font-size:.9rem}
 .dl-sum{margin:1rem 0 0;font-size:clamp(1.1rem,1.7vw,1.3rem);font-weight:600;line-height:1.6}
 .dl-facts{display:flex;flex-wrap:wrap;gap:1rem 2.4rem}
 .status{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem}
@@ -508,10 +511,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "pbx",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "glassix",
@@ -521,10 +525,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "glassix",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "intelichain",
@@ -534,10 +539,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "intelichain",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "specs",
@@ -547,10 +553,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "specs",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "portal",
@@ -560,10 +567,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "portal",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "one",
@@ -573,10 +581,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "סיום שלב האפיונים",
      "img": "one",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     }
    ]
   },
@@ -595,10 +604,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "crm1",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "crm2",
@@ -608,10 +618,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "תרחיש מאוחר: תחילת ינואר 2027",
      "img": "crm2",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "crm3",
@@ -621,10 +632,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "תרחיש מאוחר: פברואר 2027",
      "img": "crm3",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     }
    ]
   },
@@ -643,10 +655,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "tech",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     },
     {
      "id": "qr",
@@ -656,10 +669,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "כחודש עבודה מרגע ההתנעה",
      "img": "qr",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     }
    ]
   },
@@ -678,10 +692,11 @@ html.snap{scroll-snap-type:y proximity}
      "etaNote": "",
      "img": "hr",
      "summary": "",
-     "budget": "",
      "done": "",
      "todo": "",
-     "next": ""
+     "next": "",
+     "budgetOnce": "",
+     "budgetMonthly": ""
     }
    ]
   }
@@ -729,6 +744,7 @@ html.snap{scroll-snap-type:y proximity}
 
   var embedded = document.getElementById("project-data").textContent;
   var data = JSON.parse(embedded);
+  data.sections.forEach(function (s) { s.items.forEach(function (it) { if (it.budget && !it.budgetOnce) it.budgetOnce = it.budget; delete it.budget; if (it.budgetOnce == null) it.budgetOnce = ""; if (it.budgetMonthly == null) it.budgetMonthly = ""; }); });
   var mode = "compact";
   try { var m = localStorage.getItem(MODE_KEY); if (m === "full" || m === "compact") mode = m; } catch (e) {}
 
@@ -777,10 +793,16 @@ html.snap{scroll-snap-type:y proximity}
   }
 
   var STATUS = [["done", "מה בוצע", "done"], ["todo", "מה נשאר לבצע", "todo"], ["next", "מה הלאה", "next"]];
-  function budgetBlock(it, path, cls) {
-    if (!editing) return '<div class="' + cls + '"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div>";
-    return '<div class="' + cls + '"><span class="lbl">תקציב</span>' + ed("span", path + ".budget", it.budget, "val", "תקציב (למשל ₪150,000)") + "</div>";
+  var BUDGET = [["budgetOnce", "עלות חד פעמית", "למשל ₪50,000"], ["budgetMonthly", "מנוי חודשי", "למשל ₪2,000 לחודש"]];
+  function budgetRows(it, path) {
+    var rows = BUDGET.map(function (x) {
+      if (editing) return '<div class="b-row"><span class="lbl">' + x[1] + "</span>" + ed("span", path + "." + x[0], it[x[0]], "val", x[2]) + "</div>";
+      return it[x[0]] ? '<div class="b-row"><span class="lbl">' + x[1] + '</span><span class="val">' + esc(it[x[0]]) + "</span></div>" : "";
+    }).join("");
+    return rows || '<div class="b-row"><span class="lbl">תקציב</span><span class="val">[להשלמה]</span></div>';
   }
+  function budgetBlock(it, path, cls) { return '<div class="' + cls + '">' + budgetRows(it, path) + "</div>"; }
+
   function summaryLine(it, path, cls) {
     if (!editing && !it.summary) return "";
     return ed("p", path + ".summary", it.summary, cls, "שורה אחת שמסבירה על הפרויקט");
@@ -988,7 +1010,7 @@ html.snap{scroll-snap-type:y proximity}
         (it.summary ? '<p class="dl-sum">' + esc(it.summary) + "</p>" : "") +
         '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
           (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
-        '<div class="dl-eta dl-budget"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div></div>" +
+        '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
         (it.desc ? '<p class="dl-desc sc-desc"><span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span></p>" : "") +
         statusBlocks(it, "") +
         (last && x.s.note ? '<p class="sc-note">' + esc(x.s.note) + "</p>" : "") +
@@ -1179,7 +1201,7 @@ html.snap{scroll-snap-type:y proximity}
       (it.summary ? '<p class="dl-sum">' + esc(it.summary) + "</p>" : "") +
       '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
         (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
-      '<div class="dl-eta dl-budget"><span class="lbl">תקציב</span><span class="val">' + esc(it.budget || "[להשלמה]") + "</span></div></div>" +
+      '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
       (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
       statusBlocks(it, "") +
       '<div class="dl-nav"><button type="button" data-nav="prev"' + (idx === 0 ? " disabled" : "") + ">" + svgArrow("right") + "הקודם</button>" +
@@ -1358,7 +1380,9 @@ html.snap{scroll-snap-type:y proximity}
   }
   function normalize(d) {
     d.sections.forEach(function (s) { s.items.forEach(function (it) {
-      ["summary", "budget", "done", "todo", "next"].forEach(function (k) { if (it[k] == null) it[k] = ""; });
+      if (it.budget && !it.budgetOnce) it.budgetOnce = it.budget;
+      delete it.budget;
+      ["summary", "budgetOnce", "budgetMonthly", "done", "todo", "next"].forEach(function (k) { if (it[k] == null) it[k] = ""; });
     }); });
     return d;
   }
@@ -1478,7 +1502,7 @@ html.snap{scroll-snap-type:y proximity}
     if (act === "cancel") return exitEdit(true);
     if (act === "add") {
       var si = +b.getAttribute("data-si");
-      data.sections[si].items.push({ id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budget: "", done: "", todo: "", next: "", img: "pattern" });
+      data.sections[si].items.push({ id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budgetOnce: "", budgetMonthly: "", done: "", todo: "", next: "", img: "pattern" });
       render();
       var tiles = app.querySelectorAll('.tile[data-si="' + si + '"] .name');
       var last = tiles[tiles.length - 1]; if (last) last.focus();
