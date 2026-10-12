@@ -565,6 +565,20 @@ html.snap{scroll-snap-type:y proximity}
 .st-doing{border-top-color:#D29922}
 .dl-rep .st-next{border-top-color:var(--red)}
 @media (max-width:760px){.r-cols,.r-hist-body{grid-template-columns:1fr}}
+
+/* ---------- photos, sync, floating logo ---------- */
+.art img,.tl-thumb img,.sc-art img{display:block;width:100%;height:100%;object-fit:cover}
+.r-synced{font-size:.75rem;color:var(--muted);border:1px dashed var(--grout);padding:.05rem .45rem}
+.r-addbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.2rem 0 1rem}
+.r-addbar .r-add{margin:0}
+.r-addbar select{font:inherit;border:1px solid var(--ink);background:var(--paper);color:var(--ink);padding:.42rem .5rem;max-width:100%}
+.float-logo{position:fixed;top:10px;inset-inline-start:12px;z-index:30;display:flex;align-items:center;background:var(--band);padding:9px 14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(-12px);pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.float-logo .logo{width:96px}
+body.scrolled .float-logo{opacity:1;transform:none;pointer-events:auto}
+@media (min-width:760px){body.scrolled .toolbar .wrap{padding-inline-start:calc(clamp(1.1rem,4vw,3rem) + 130px)}}
+@media (max-width:759px){.float-logo{top:0;inset-inline:0;padding:9px 16px;box-shadow:0 4px 12px rgba(0,0,0,.2)}.float-logo .logo{width:80px}}
+@media print{.float-logo{display:none!important}}
 </style>
 </head>
 <body>
@@ -1099,7 +1113,11 @@ html.snap{scroll-snap-type:y proximity}
     return '<svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="480" height="300" fill="' + t[0] + '"/>' + body +
       '<rect width="480" height="300" fill="url(#art-glaze)"/><rect width="480" height="300" fill="url(#art-vig)"/></svg>';
   }
-  function artSVG(it) { return ART[it.img] || patternArt(it.id || it.name); }
+  var IMGS = {};
+  function artSVG(it) {
+    if (it.photo && IMGS[it.photo]) return '<img src="' + IMGS[it.photo] + '" alt="" draggable="false">';
+    return ART[it.img] || patternArt(it.id || it.name);
+  }
   function artHTML(it, cls) { return '<div class="art' + (cls ? " " + cls : "") + '">' + artSVG(it) + "</div>"; }
 
   var embedded = document.getElementById("project-data").textContent;
@@ -1183,7 +1201,8 @@ html.snap{scroll-snap-type:y proximity}
         '<div class="tile-tools">' +
         '<button type="button" data-act="up" aria-label="הזזה מוקדם יותר"' + (ii === 0 ? " disabled" : "") + ">" + svgArrow("right") + "</button>" +
         '<button type="button" data-act="down" aria-label="הזזה מאוחר יותר"' + (ii === total - 1 ? " disabled" : "") + ">" + svgArrow("left") + "</button>" +
-        '<button type="button" data-act="img" aria-label="החלפת תמונה">תמונה</button>' +
+        '<button type="button" data-act="upload">העלאת תמונה</button>' +
+        '<button type="button" data-act="img" aria-label="החלפה לאיור הבא">' + (it.photo ? "איור במקום תמונה" : "איור") + "</button>" +
         '<button type="button" data-act="size" title="גודל האריח בתצוגת פסיפס">' + SIZES[sizeOf(it)] + "</button>" +
         '<button type="button" data-act="del">מחיקה</button></div>' + artHTML(it) +
         ed("h3", path + ".name", it.name, "name", "שם הפרויקט") +
@@ -1247,6 +1266,48 @@ html.snap{scroll-snap-type:y proximity}
     return p ? '<button type="button" class="r-link" data-open="' + p.si + "-" + p.ii + '">לכרטיס הפרויקט</button>' : "";
   }
 
+
+  /* ---------- projects <-> reports sync ---------- */
+  function findSectionIdx(pid) { for (var i = 0; i < data.sections.length; i++) if (data.sections[i].id === pid) return i; return -1; }
+  function entryName(e) {
+    var p = e.pid ? findProject(e.pid) : null;
+    if (p) return data.sections[p.si].items[p.ii].name || e.name;
+    var si = e.pid ? findSectionIdx(e.pid) : -1;
+    return si >= 0 ? data.sections[si].title || e.name : e.name;
+  }
+  function entryNamePath(e, ep) {
+    var p = e.pid ? findProject(e.pid) : null;
+    if (p) return "sections." + p.si + ".items." + p.ii + ".name";
+    var si = e.pid ? findSectionIdx(e.pid) : -1;
+    return si >= 0 ? "sections." + si + ".title" : ep + ".name";
+  }
+  function newEntry(pid) { return { name: "", tag: "", pid: pid || "", status: "on", snap: "", done: "", doing: "", next: "" }; }
+  function latestReport() { var all = reps(); return all.length ? all[all.length - 1] : null; }
+  /* a deleted project stays in past reports under its last name, just unlinked */
+  function unlinkPid(pid) {
+    (data.reports || []).forEach(function (r) { r.entries.forEach(function (e) { if (e.pid === pid) { e.name = entryName(e); e.pid = ""; } }); });
+  }
+  function syncNames(d) {
+    (d.reports || []).forEach(function (r) { r.entries.forEach(function (e) { if (e.pid) e.name = entryName(e); }); });
+  }
+  function newProject(si) {
+    var it = { id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budgetOnce: "", budgetMonthly: "", done: "", todo: "", next: "", img: "pattern" };
+    data.sections[si].items.push(it);
+    return it;
+  }
+  function addOptions(r) {
+    var used = {};
+    r.entries.forEach(function (e) { if (e.pid) used[e.pid] = 1; });
+    var h = '<option value="topic">תחום כללי (לא פרויקט)</option><optgroup label="פרויקט חדש – ייפתח גם בעמוד הפרויקטים תחת:">' +
+      data.sections.map(function (s, si) { return '<option value="new:' + si + '">' + esc(s.title || "ללא כותרת") + "</option>"; }).join("") + "</optgroup>";
+    var ex = "";
+    data.sections.forEach(function (s) {
+      if (s.kind === "sub" && !used[s.id]) ex += '<option value="pid:' + esc(s.id) + '">' + esc(s.title) + " (כל הקבוצה)</option>";
+      s.items.forEach(function (it) { if (!used[it.id]) ex += '<option value="pid:' + esc(it.id) + '">' + esc(it.name || "ללא שם") + "</option>"; });
+    });
+    return h + (ex ? '<optgroup label="פרויקט קיים שעוד לא בדיווח:">' + ex + "</optgroup>" : "");
+  }
+
   function filterBar() {
     var all = reps(), sel = selReps();
     var one = (rf.mode === "one" || rf.mode === "latest") && sel.length ? sel[0].id : null;
@@ -1262,7 +1323,7 @@ html.snap{scroll-snap-type:y proximity}
   }
 
   function entryHTML(e, id) {
-    return '<article class="r-entry" id="' + id + '"><header>' + stDot(e.status) + "<h4>" + esc(e.name) + "</h4>" +
+    return '<article class="r-entry" id="' + id + '"><header>' + stDot(e.status) + "<h4>" + esc(entryName(e)) + "</h4>" +
       (e.tag ? '<span class="r-tag">' + esc(e.tag) + "</span>" : "") + stPill(e.status) + projLink(e.pid) + "</header>" +
       '<div class="r-cols">' + COLS.map(function (c) {
         return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + (ul(e[c[0]]) || EMPTY) + "</div>";
@@ -1282,7 +1343,7 @@ html.snap{scroll-snap-type:y proximity}
     var h = '<div class="r-title"><h3>דיווח ' + repLabel(r, true) + "</h3>" + LEGEND + "</div>";
     if (r.entries.length) {
       h += '<div class="r-snap">' + r.entries.map(function (e, i) {
-        return '<button type="button" class="r-card" data-rjump="re-' + esc(r.id) + "-" + i + '"><span class="r-card-h">' + stDot(e.status) + "<b>" + esc(e.name) + "</b></span>" +
+        return '<button type="button" class="r-card" data-rjump="re-' + esc(r.id) + "-" + i + '"><span class="r-card-h">' + stDot(e.status) + "<b>" + esc(entryName(e)) + "</b></span>" +
           (e.snap ? '<span class="r-card-t">' + esc(e.snap) + "</span>" : "") + "</button>";
       }).join("") + "</div>";
       h += r.entries.map(function (e, i) { return entryHTML(e, "re-" + r.id + "-" + i); }).join("");
@@ -1301,7 +1362,7 @@ html.snap{scroll-snap-type:y proximity}
     var h = '<div class="r-title"><h3>' + list.length + " דיווחים · " + repLabel({ from: list[0].from, to: list[list.length - 1].to }, true) + "</h3>" + LEGEND + "</div>";
     groups.forEach(function (g) {
       var lastRow = g.rows[g.rows.length - 1], last = lastRow.e;
-      h += '<article class="r-entry r-hist"><header>' + stDot(last.status) + "<h4>" + esc(last.name) + "</h4>" + stPill(last.status) + projLink(last.pid) + "</header>" +
+      h += '<article class="r-entry r-hist"><header>' + stDot(last.status) + "<h4>" + esc(entryName(last)) + "</h4>" + stPill(last.status) + projLink(last.pid) + "</header>" +
         '<div class="r-hist-body"><div class="r-col c-done"><span class="r-col-h">מה בוצע לאורך התקופה</span>' +
         g.rows.map(function (x) { return '<div class="r-period"><span class="r-pl">' + repLabel(x.r) + "</span>" + (ul(x.e.done) || EMPTY) + "</div>"; }).join("") + "</div>" +
         '<div class="r-col c-doing"><span class="r-col-h">בתהליך <small>(נכון ל-' + fmtD(lastRow.r.to) + ")</small></span>" + (ul(last.doing) || EMPTY) +
@@ -1347,13 +1408,14 @@ html.snap{scroll-snap-type:y proximity}
         '<button type="button" data-ract="eup" aria-label="הזזה למעלה"' + (i === 0 ? " disabled" : "") + ">" + svgArrow("up") + "</button>" +
         '<button type="button" data-ract="edown" aria-label="הזזה למטה"' + (i === n - 1 ? " disabled" : "") + ">" + svgArrow("down") + "</button>" +
         '<button type="button" data-ract="edel">מחיקה</button></div>' +
-        "<header>" + ed("h4", ep + ".name", e.name, "", "שם התחום") + ed("span", ep + ".tag", e.tag, "r-tag", "תגית (לא חובה)") + "</header>" +
+        "<header>" + ed("h4", entryNamePath(e, ep), entryName(e), "", e.pid ? "שם הפרויקט" : "שם התחום") + ed("span", ep + ".tag", e.tag, "r-tag", "תגית (לא חובה)") +
+        (e.pid ? '<span class="r-synced">מסונכרן עם עמוד הפרויקטים</span>' : "") + "</header>" +
         '<div class="r-snap-ed"><span class="r-col-h">תמונת מצב</span>' + ed("p", ep + ".snap", e.snap, "", "משפט או שניים – איפה התחום עומד") + "</div>" +
         '<div class="r-cols">' + COLS.map(function (c) {
           return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + ed("p", ep + "." + c[0], e[c[0]], "r-lines", "שורה לכל פריט") + "</div>";
         }).join("") + "</div></article>";
     });
-    h += '<button type="button" class="r-add" data-ract="eadd">+ הוספת תחום</button>';
+    h += '<div class="r-addbar"><select data-raddsel aria-label="מה להוסיף">' + addOptions(r) + '</select><button type="button" class="r-add" data-ract="eadd">+ הוספה לדיווח</button></div>';
     h += '<div class="r-block"><h4 class="r-bh">שורה תחתונה</h4>' + ed("p", rp + ".bottom", r.bottom, "r-lines", "שורה לכל נקודה (לא חובה)") + "</div>";
     h += '<div class="r-block"><h4 class="r-bh">לדיון והכרעה</h4><div class="r-decs">' + r.decisions.map(function (d, i) {
       var dp = rp + ".decisions." + i;
@@ -1386,7 +1448,15 @@ html.snap{scroll-snap-type:y proximity}
     }
     if (!r) return;
     if (act === "delrep") { if (!armed()) return; data.reports.splice(data.reports.indexOf(r), 1); editRid = null; render(); return; }
-    if (act === "eadd") { r.entries.push({ name: "", tag: "", pid: "", status: "on", snap: "", done: "", doing: "", next: "" }); render(); return; }
+    if (act === "eadd") {
+      var selEl = app.querySelector("[data-raddsel]"), v = selEl ? selEl.value : "topic";
+      if (v.indexOf("new:") === 0) { var np = newProject(+v.slice(4)); r.entries.push(newEntry(np.id)); toast("נפתח פרויקט חדש – הוא מופיע גם בעמוד הפרויקטים"); }
+      else if (v.indexOf("pid:") === 0) r.entries.push(newEntry(v.slice(4)));
+      else r.entries.push(newEntry(""));
+      render();
+      var hs = app.querySelectorAll(".r-ed h4"); if (hs.length) hs[hs.length - 1].focus();
+      return;
+    }
     if (act === "dadd") { r.decisions.push({ type: "החלטה", title: "", text: "" }); render(); return; }
     var en = b.closest("[data-ei]"), dn = b.closest("[data-di]");
     if (en) {
@@ -1410,6 +1480,7 @@ html.snap{scroll-snap-type:y proximity}
     if (act === "kind") S[i].kind = S[i].kind === "sub" ? "main" : "sub";
     else if (act === "del") {
       if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = S[i].items.length ? "למחוק כולל " + S[i].items.length + " פרויקטים?" : "למחוק?"; return; }
+      unlinkPid(S[i].id); S[i].items.forEach(function (it) { unlinkPid(it.id); });
       S.splice(i, 1);
     } else { var j = act === "up" ? i - 1 : i + 1; if (j < 0 || j >= S.length) return; var t = S[i]; S[i] = S[j]; S[j] = t; }
     render();
@@ -1649,7 +1720,9 @@ html.snap{scroll-snap-type:y proximity}
         '<div class="acts"><button type="button" data-act="cancel">ביטול</button>' +
         '<button type="button" class="primary" data-act="save"' + (saving ? " disabled" : "") + ">" + (saving ? "שומר…" : "שמירה") + "</button></div></div>";
     }
+    h += '<a class="float-logo" href="#" aria-label="חזרה לראש הדף"><img class="logo" src="' + LOGO + '" alt="MODY" draggable="false"></a>';
     app.innerHTML = DEFS + h;
+    watchBand();
     document.body.classList.toggle("is-editing", editing);
     document.documentElement.classList.toggle("snap", v === "story" && motion());
     app.classList.toggle("editing", editing);
@@ -1658,6 +1731,16 @@ html.snap{scroll-snap-type:y proximity}
     placeSegInk(false);
     if (v === "story") observeScenes();
     else if (anim) observeWalls(intro ? 1 : 0.55);
+  }
+
+  /* show the floating logo once the header band has scrolled away */
+  var bandIO = null;
+  function watchBand() {
+    var band = app.querySelector(".band");
+    if (bandIO) bandIO.disconnect();
+    if (!band || !("IntersectionObserver" in window)) return;
+    bandIO = new IntersectionObserver(function (es) { document.body.classList.toggle("scrolled", !es[0].isIntersecting); }, { threshold: 0 });
+    bandIO.observe(band);
   }
 
   /* ---------- segmented controls ink ---------- */
@@ -2062,6 +2145,7 @@ html.snap{scroll-snap-type:y proximity}
   function save() {
     if (saving || !PASS) return;
     saving = true; render();
+    syncNames(data);
     sb("rpc/save_project_doc", { body: { p: PASS, d: normalize(JSON.parse(JSON.stringify(data))), doc: BACKEND.doc } }).then(function () {
       saving = false; editing = false; snapshot = null; render(); toast("נשמר");
     }, function (code) {
@@ -2069,6 +2153,47 @@ html.snap{scroll-snap-type:y proximity}
       if (code === 401 || code === 403) { PASS = ""; toast("הסיסמה לא תקפה. היכנס שוב לעריכה"); }
       else toast("השמירה נכשלה. נסה שוב");
     });
+  }
+
+
+  /* ---------- project photos: resized in the browser, stored in Supabase ---------- */
+  function loadImages() {
+    if (!BACKEND.url) return;
+    sb("project_images?select=id,data").then(function (rows) {
+      rows.forEach(function (r) { IMGS[r.id] = r.data; });
+      if (rows.length && !(dlg && dlg.open)) render();
+    }).catch(function () {});
+  }
+  function resizeImage(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file), im = new Image();
+      im.onload = function () {
+        var max = 1400, w = im.naturalWidth, h = im.naturalHeight, k = Math.min(1, max / Math.max(w, h));
+        var c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+        var g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url); resolve(c.toDataURL("image/jpeg", 0.84));
+      };
+      im.onerror = function () { URL.revokeObjectURL(url); reject(); };
+      im.src = url;
+    });
+  }
+  function pickImage(it) {
+    var inp = document.createElement("input");
+    inp.type = "file"; inp.accept = "image/*";
+    inp.onchange = function () {
+      var f = inp.files && inp.files[0]; if (!f) return;
+      toast("מעלה תמונה…");
+      resizeImage(f).then(function (du) {
+        var id = "img-" + (it.id || "p") + "-" + Date.now().toString(36);
+        return sb("rpc/save_project_image", { body: { p: PASS, id: id, data: du } }).then(function () {
+          IMGS[id] = du; it.photo = id; render(); toast("התמונה עלתה. לחץ שמירה כדי לעדכן את הדף");
+        });
+      }).catch(function (code) {
+        if (code === 401 || code === 403) { PASS = ""; toast("הסיסמה לא תקפה. היכנס שוב לעריכה"); }
+        else toast("העלאת התמונה נכשלה");
+      });
+    };
+    inp.click();
   }
 
   var toastTimer = null;
@@ -2112,6 +2237,7 @@ html.snap{scroll-snap-type:y proximity}
       var ra = e.target.closest("[data-ract]"); if (ra) { reportAct(ra); return; }
       var sa = e.target.closest("[data-sact]"); if (sa) { sectionAct(sa); return; }
     }
+    if (e.target.closest(".float-logo")) { e.preventDefault(); window.scrollTo({ top: 0, behavior: motion() ? "smooth" : "auto" }); return; }
     var sc = e.target.closest("[data-scene]");
     if (sc) { var tgt = document.getElementById("sc-" + sc.getAttribute("data-scene")); if (tgt) tgt.scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" }); return; }
     if (!editing) { var o = e.target.closest("[data-open]"); if (o) openCard(o.getAttribute("data-open")); return; }
@@ -2122,8 +2248,10 @@ html.snap{scroll-snap-type:y proximity}
     if (act === "cancel") return exitEdit(true);
     if (act === "add") {
       var si = +b.getAttribute("data-si");
-      data.sections[si].items.push({ id: "p" + Date.now().toString(36), name: "", desc: "", eta: "", etaNote: "", summary: "", budgetOnce: "", budgetMonthly: "", done: "", todo: "", next: "", img: "pattern" });
+      var np2 = newProject(si), lr = latestReport();
+      if (lr) lr.entries.push(newEntry(np2.id));
       render();
+      if (lr) toast("הפרויקט נוסף גם לדיווח האחרון (" + repLabel(lr) + ")");
       var tiles = app.querySelectorAll('.tile[data-si="' + si + '"] .name');
       var last = tiles[tiles.length - 1]; if (last) last.focus();
       return;
@@ -2135,11 +2263,13 @@ html.snap{scroll-snap-type:y proximity}
     }
     if (act === "img") {
       var cur = s.items[i], k = ART_KEYS.indexOf(cur.img);
-      cur.img = ART_KEYS[(k + 1) % ART_KEYS.length]; render(); return;
+      if (cur.photo) cur.photo = ""; else cur.img = ART_KEYS[(k + 1) % ART_KEYS.length];
+      render(); return;
     }
+    if (act === "upload") { pickImage(s.items[i]); return; }
     if (act === "del") {
       if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "למחוק?"; return; }
-      s.items.splice(i, 1); render(); return;
+      unlinkPid(s.items[i].id); s.items.splice(i, 1); render(); return;
     }
     var j = act === "up" ? i - 1 : i + 1;
     if (j < 0 || j >= s.items.length) return;
@@ -2195,6 +2325,7 @@ html.snap{scroll-snap-type:y proximity}
   render();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeSegInk(false); });
   loadRemote();
+  loadImages();
 })();
 </script>
 </body>
