@@ -554,7 +554,12 @@ html.snap{scroll-snap-type:y proximity}
 .r-snap-ed{margin-bottom:1rem}
 .r-snap-ed p,.r-lines{margin:0;white-space:pre-line;line-height:1.65;min-height:1.6em}
 .sec-tools{justify-content:flex-start;margin:0 0 .8rem}
-.dl-rep{margin-top:1.8rem}
+.dl-rep{margin-top:1.6rem;padding:1rem 1.1rem;background:var(--tile-hover);border-inline-start:2px solid var(--red)}
+.dl-rep-top{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem}
+.dl-rep-snap{margin:.7rem 0 0;font-size:1.05rem;line-height:1.7;white-space:pre-line}
+.t-upd{padding:.7rem .8rem;background:var(--tile-hover);border-inline-start:2px solid var(--red)}
+.t-upd-h{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--muted);margin-bottom:.3rem}
+.t-upd p{margin:0;font-size:.95rem;line-height:1.6;white-space:pre-line}
 .dl-rep-h{font-size:.85rem;color:var(--muted);margin-inline-end:.6rem}
 .dl-rep .st-ul,.dl-rep .r-ul{font-size:.95rem}
 .st-doing{border-top-color:#D29922}
@@ -1193,7 +1198,7 @@ html.snap{scroll-snap-type:y proximity}
     }
     return '<article class="tile clickable" data-open="' + si + "-" + ii + '" tabindex="0" role="button" aria-haspopup="dialog"' + st + ">" +
       artHTML(it) + '' + MARK + '<h3 class="name">' + esc(it.name) + "</h3>" +
-      summaryLine(it, path, "summary") +
+      summaryLine(it, path, "summary") + tileUpdate(it, data.sections[si].id) +
       (it.desc ? '<p class="desc">' + esc(it.desc) + "</p>" : "") +
       budgetBlock(it, path, "budget") +
       etaBlock(it, path, "eta") + "</article>";
@@ -1410,14 +1415,23 @@ html.snap{scroll-snap-type:y proximity}
     render();
   }
   /* the latest report entry linked to a project (or to its group), within the selected period */
-  function projReportHTML(x) {
+  function latestFor(it, sid) {
     var hit = null;
-    selReps().forEach(function (r) { r.entries.forEach(function (e) { if (e.pid && (e.pid === x.it.id || e.pid === x.s.id)) hit = { r: r, e: e }; }); });
+    reps().forEach(function (r) { r.entries.forEach(function (e) { if (e.pid && (e.pid === it.id || e.pid === sid)) hit = { r: r, e: e }; }); });
+    return hit;
+  }
+  function tileUpdate(it, sid) {
+    var hit = latestFor(it, sid);
+    if (!hit || !hit.e.snap) return "";
+    return '<div class="t-upd"><span class="t-upd-h">' + stDot(hit.e.status) + "עדכון אחרון · " + repLabel(hit.r) + '</span><p>' + esc(hit.e.snap) + "</p></div>";
+  }
+  function projReportHTML(x) {
+    var hit = latestFor(x.it, x.s.id);
     if (!hit) return statusBlocks(x.it, "");
     var cols = COLS.filter(function (c) { return lines(hit.e[c[0]]).length; });
-    if (!cols.length) return "";
-    return '<div class="dl-rep"><span class="dl-rep-h">מתוך הדיווח ' + repLabel(hit.r, true) + "</span>" + stPill(hit.e.status) +
-      '<div class="status">' + cols.map(function (c) { return '<div class="st st-' + c[0] + '"><span class="st-h">' + c[1] + "</span>" + ul(hit.e[c[0]]) + "</div>"; }).join("") + "</div></div>";
+    return '<div class="dl-rep"><div class="dl-rep-top"><span class="dl-rep-h">עדכון אחרון · דיווח ' + repLabel(hit.r, true) + "</span>" + stPill(hit.e.status) + "</div>" +
+      (hit.e.snap ? '<p class="dl-rep-snap">' + esc(hit.e.snap) + "</p>" : "") +
+      (cols.length ? '<div class="status">' + cols.map(function (c) { return '<div class="st st-' + c[0] + '"><span class="st-h">' + c[1] + "</span>" + ul(hit.e[c[0]]) + "</div>"; }).join("") + "</div>" : "") + "</div>";
   }
 
   /* ---------- views ---------- */
@@ -1425,7 +1439,8 @@ html.snap{scroll-snap-type:y proximity}
   var VIEWS = [["cards", "כרטיסיות"], ["mosaic", "פסיפס"], ["timeline", "ציר זמן"], ["story", "סיפור"]];
   function validView(v) { return VIEWS.some(function (x) { return x[0] === v; }); }
   var view = validView(data.defaultView) ? data.defaultView : "cards";
-  try { var sv = localStorage.getItem(VIEW_KEY); if (validView(sv)) view = sv; } catch (e) {}
+  var PAGES = [["projects", "פרויקטים"], ["reports", "דיווחים דו-שבועיים"]];
+  var page = location.hash === "#reports" ? "reports" : "projects";
 
   var SIZES = { s: "קטן", m: "ריבוע", h: "חצי רוחב", l: "גדול", w: "רוחב מלא" };
   var SIZE_ORDER = ["s", "m", "h", "l", "w"];
@@ -1602,7 +1617,7 @@ html.snap{scroll-snap-type:y proximity}
     var showFull = editing || mode === "full";
     var anim = motion() && !editing;
     var intro = anim && !introPlayed;
-    var v = editing ? "cards" : view;
+    var v = page === "reports" ? "reports" : editing ? "cards" : view;
     var h = "";
     h += '<header class="band' + (intro ? " intro" : "") + '">' + (editing ? "" : RING) + '<div class="wrap">' +
       '<img class="logo" src="' + LOGO + '" alt="MODY" draggable="false">' +
@@ -1612,14 +1627,15 @@ html.snap{scroll-snap-type:y proximity}
       ed("p", "date", data.date, "date", "תאריך") + "</div></div></div></header>";
 
     h += '<div class="toolbar"><div class="wrap">' + ed("p", "note", data.note, "note", "הערה כללית") +
-      (editing ? "" : '<div class="controls">' + segHTML("אופן התצוגה", VIEWS, view, "data-view") +
-        (view === "cards" ? segHTML("רמת פירוט", [["compact", "שמות בלבד"], ["full", "פירוט מלא"]], mode, "data-mode") : "") + "</div>") +
+      '<div class="controls">' + segHTML("עמוד", PAGES, page, "data-page") +
+      (editing || page === "reports" ? "" : segHTML("אופן התצוגה", VIEWS, view, "data-view") +
+        (view === "cards" ? segHTML("רמת פירוט", [["compact", "שמות בלבד"], ["full", "פירוט מלא"]], mode, "data-mode") : "")) + "</div>" +
       "</div></div>";
 
     var mainCls = "wrap view-" + v + (v === "cards" ? (showFull ? " mode-full" : " mode-compact") : "");
     h += '<main class="' + mainCls + '">';
-    if (v !== "story") h += reportsHTML();
-    if (v === "cards") h += cardsHTML(anim);
+    if (v === "reports") h += reportsHTML();
+    else if (v === "cards") h += cardsHTML(anim);
     else if (v === "mosaic") h += mosaicHTML(anim);
     else if (v === "timeline") h += timelineHTML(anim);
     else h += storyHTML();
@@ -1781,8 +1797,8 @@ html.snap{scroll-snap-type:y proximity}
       '<div class="dl-facts">' + (it.eta || it.etaNote ? '<div class="dl-eta"><span class="lbl">צפי סיום</span><span class="val">' + esc(it.eta) + "</span>" +
         (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
       '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
-      (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
       projReportHTML(x) +
+      (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
       '<div class="dl-nav"><button type="button" data-nav="prev"' + (idx === 0 ? " disabled" : "") + ">" + svgArrow("right") + "הקודם</button>" +
       '<span class="dl-pos">' + (idx + 1) + " מתוך " + total + "</span>" +
       '<button type="button" data-nav="next"' + (idx === total - 1 ? " disabled" : "") + ">הבא" + svgArrow("left") + "</button></div>" +
@@ -1806,7 +1822,10 @@ html.snap{scroll-snap-type:y proximity}
   function setRect(r) { card.style.left = r.left + "px"; card.style.top = r.top + "px"; card.style.width = r.width + "px"; card.style.height = r.height + "px"; }
   function rectOf(el) { var r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height }; }
   function px(r) { return { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" }; }
-  function tileFor(x) { return app.querySelector('[data-open="' + x.si + "-" + x.ii + '"]'); }
+  function tileFor(x) {
+    var k = '[data-open="' + x.si + "-" + x.ii + '"]';
+    return app.querySelector(".tile" + k + ", .m-tile" + k + ", .tl-row" + k);
+  }
 
   function openCard(key) {
     if (busy || editing) return;
@@ -2062,11 +2081,16 @@ html.snap{scroll-snap-type:y proximity}
 
   /* ---------- events ---------- */
   app.addEventListener("click", function (e) {
-    var m = e.target.closest("[data-mode], [data-view]");
+    var m = e.target.closest("[data-mode], [data-view], [data-page]");
     if (m) {
-      var isView = m.hasAttribute("data-view"), val = m.getAttribute(isView ? "data-view" : "data-mode");
-      if (isView ? val === view : val === mode) return;
-      if (isView) { view = val; try { localStorage.setItem(VIEW_KEY, view); } catch (er) {} }
+      var isPage = m.hasAttribute("data-page"), isView = isPage || m.hasAttribute("data-view");
+      var val = m.getAttribute(isPage ? "data-page" : isView ? "data-view" : "data-mode");
+      if (isPage ? val === page : isView ? val === view : val === mode) return;
+      if (isPage) {
+        page = val;
+        try { history.replaceState(null, "", val === "reports" ? "#reports" : location.pathname + location.search); } catch (er) {}
+      }
+      else if (isView) { view = val; try { localStorage.setItem(VIEW_KEY, view); } catch (er) {} }
       else { mode = val; try { localStorage.setItem(MODE_KEY, mode); } catch (er) {} }
       m.parentNode.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b === m)); });
       placeSegInk(true);
