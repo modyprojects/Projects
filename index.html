@@ -485,6 +485,81 @@ html.snap{scroll-snap-type:y proximity}
 .login-dlg button{font:inherit;padding:.5rem 1.1rem;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
 .login-dlg button.primary{background:var(--red);border-color:var(--red);color:#fff}
 @media (max-width:640px){.status{grid-template-columns:1fr}}
+
+/* ---------- reports ---------- */
+.st-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none;background:var(--muted)}
+.st-dot.on{background:#2E9E47}.st-dot.attn{background:#D29922}
+.reports .sec-head{margin-bottom:.4rem}
+.r-filter{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;margin:0 0 1.6rem}
+.r-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.r-chips button{font:inherit;font-size:.95rem;border:1px solid var(--grout);background:var(--paper);color:var(--ink);padding:.45rem .9rem;cursor:pointer}
+.r-chips button:hover{border-color:var(--ink)}
+.r-chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.r-chips small{font-size:.75rem;opacity:.75}
+.r-range{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.95rem;color:var(--muted);padding:.2rem .6rem;border:1px solid transparent}
+.r-range.on{border-color:var(--ink);color:var(--ink)}
+.r-range input,.r-dates input,.r-edit-bar select,.r-ed select{font:inherit;font-size:.92rem;border:1px solid var(--grout);background:var(--paper);color:var(--ink);padding:.3rem .4rem}
+.r-title{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1rem;margin:0 0 1rem}
+.r-title h3{margin:0;font-weight:600;font-size:clamp(1.15rem,1.8vw,1.4rem)}
+.r-legend{display:flex;gap:1rem;font-size:.85rem;color:var(--muted)}
+.r-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.r-snap{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:2rem}
+.r-card{font:inherit;text-align:start;color:inherit;display:flex;flex-direction:column;gap:.45rem;padding:1rem;background:var(--tile);border:1px solid var(--grout);cursor:pointer}
+.r-card:hover{border-color:var(--ink)}
+.r-card-h{display:flex;align-items:center;gap:.5rem}
+.r-card-h b{font-weight:600;font-size:1.05rem}
+.r-card-t{font-size:.92rem;line-height:1.55;color:var(--ink-2);white-space:pre-line}
+.r-entry{background:var(--tile);border:1px solid var(--grout);padding:1.1rem 1.2rem 1.2rem;margin-bottom:1rem;scroll-margin-top:1rem}
+.r-entry header{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .7rem;margin-bottom:.9rem}
+.r-entry h4{margin:0;font-weight:600;font-size:1.2rem}
+.r-tag{font-size:.85rem;color:var(--muted)}
+.r-st{font-size:.8rem;padding:.12rem .5rem;border:1px solid currentColor}
+.r-st.on{color:#2E9E47}.r-st.attn{color:#B7811A}
+.r-link{margin-inline-start:auto;font:inherit;font-size:.85rem;background:none;border:0;border-bottom:1px solid currentColor;color:var(--muted);cursor:pointer;padding:0}
+.r-link:hover{color:var(--red)}
+.r-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.r-col{border-top:3px solid var(--ink-2);padding-top:.6rem;min-width:0}
+.r-col.c-done{border-top-color:#2E9E47}.r-col.c-doing{border-top-color:#D29922}.r-col.c-next{border-top-color:var(--red)}
+.r-col-h{display:block;font-weight:600;font-size:.9rem;margin-bottom:.35rem}
+.r-col-h small{font-weight:400;color:var(--muted)}
+.r-col-h2{margin-top:1rem}
+.r-ul{margin:0;padding-inline-start:1.1rem;line-height:1.65;font-size:.97rem;color:var(--ink-2)}
+.r-ul li+li{margin-top:.3rem}
+.r-empty{margin:0;color:var(--muted)}
+.r-none{padding:1.5rem 0}
+.r-hist-body{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem}
+.r-period+.r-period{margin-top:.8rem}
+.r-pl{display:inline-block;font-size:.8rem;font-weight:400;color:var(--muted);border:1px solid var(--grout);padding:.05rem .45rem;margin-bottom:.3rem}
+.r-block{margin-top:2rem}
+.r-bh{margin:0 0 .8rem;font-weight:600;font-size:1.1rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.r-bh .r-pl{margin:0}
+.r-decs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem}
+.r-dec{padding:1rem;border:1px solid var(--grout);border-inline-start:3px solid var(--muted);background:var(--tile)}
+.r-dec.dec{border-inline-start-color:var(--red)}
+.r-dtype{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.25rem}
+.r-dec.dec .r-dtype{color:var(--red);font-weight:600}
+.r-dec b{display:block;font-weight:600}
+.r-dec p{margin:.4rem 0 0;line-height:1.6;font-size:.95rem;color:var(--ink-2)}
+.r-next{margin:0;padding-inline-start:1.4rem;line-height:1.7;columns:2 340px;column-gap:2rem}
+.r-next li{break-inside:avoid;margin-bottom:.4rem}
+.r-edit-bar,.r-dates{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin-bottom:1rem}
+.r-edit-bar button,.r-add,.sec-add{font:inherit;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;cursor:pointer}
+.r-edit-bar button.primary{background:var(--red);border-color:var(--red);color:#fff}
+.r-edit-bar button.armed,.sec-tools button.armed{background:var(--red);border-color:var(--red);color:#fff}
+.r-add{display:block;margin:.2rem 0 1rem;border-style:dashed}
+.sec-add{display:block;width:100%;margin:1rem 0 2rem;padding:1rem;border-style:dashed}
+.r-hint{margin:0 0 1rem;color:var(--muted);font-size:.92rem}
+.r-ed .tile-tools{flex-wrap:wrap;justify-content:flex-start;margin:0 0 .8rem}
+.r-ed .tile-tools button{display:inline-flex;align-items:center;gap:.35rem}
+.r-snap-ed{margin-bottom:1rem}
+.r-snap-ed p,.r-lines{margin:0;white-space:pre-line;line-height:1.65;min-height:1.6em}
+.sec-tools{justify-content:flex-start;margin:0 0 .8rem}
+.dl-rep{margin-top:1.8rem}
+.dl-rep-h{font-size:.85rem;color:var(--muted);margin-inline-end:.6rem}
+.dl-rep .st-ul,.dl-rep .r-ul{font-size:.95rem}
+.st-doing{border-top-color:#D29922}
+.dl-rep .st-next{border-top-color:var(--red)}
+@media (max-width:760px){.r-cols,.r-hist-body{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -493,7 +568,7 @@ html.snap{scroll-snap-type:y proximity}
  "docTitle": "סיכום פרויקטים – מחלקת אוטומציה | MODY",
  "title": "סיכום פרויקטים",
  "subtitle": "מחלקת אוטומציה",
- "date": "05.10.2026",
+ "date": "12.10.2026",
  "note": "",
  "sections": [
   {
@@ -701,7 +776,287 @@ html.snap{scroll-snap-type:y proximity}
    ]
   }
  ],
- "defaultView": "cards"
+ "defaultView": "cards",
+ "reports": [
+  {
+   "id": "r1",
+   "from": "2026-08-07",
+   "to": "2026-08-16",
+   "bottom": "",
+   "decisions": [
+    {
+     "type": "החלטה",
+     "title": "עריכה חופשית של תנאי החוזה במערכת המפרטים",
+     "text": "מחלקת פרויקטים ביקשו לאפשר לשנות את נוסח תנאי החוזה בטקסט חופשי. כרגע לא אישרתי."
+    },
+    {
+     "type": "לידיעה",
+     "title": "הצעת מחיר מ-ONE על מעקב תיקי יבוא",
+     "text": "סבב האיפיון מולONE הסתיים. הצעת מחיר ואיפיון סופי אמורים להגיע בקרוב ויובאו לאישור לאחר חתימה על הצעת המחיר."
+    }
+   ],
+   "next": "ONE: חתימה על הצעת המחיר ואישור האיפיון הסופי למעקב תיקי יבוא, לאשר את האיפיון של יצירת תמ\"ש לריבוי טפסים ולהתחיל לעבוד על תעודת המשלוח והמלקט לריבוי טפסים בו זמנית.\nCRM : לסגור את מסמך האיפיון של מחלקת פרויקטים, ולקיים ישיבת השלמה לאיפיון האדריכלים\nמפרטים: להעביר את ניהול המוצרים לצוות הרלוונטי בהדרכה מסודרת, ולהתקדם בפיתוח הקטלוג\nמרכזיה: להשלים את אישורי האיפיון, לקדם את רכש הטלפונים ולעקוב אחרי ה-firewall\nניהול הצוות: לפתוח כל שבוע בשיחת צוות ולסגור אותו בשיחת סיכום, ולהגדיר לכל פרויקט חדש עלויות שעות ומדידה של הזמן שנחסך\nשוטף: לוודא שהדוחות של Glassix יוצאים תקינים, להמשיך את סבב השיפורים במערכת המפרטים.\nCode QR :לשבת עם נדב סימני וליצור מערכת אוטומטית ליצירת אתרים ייעודיים לפרקטים + יצירת QR המוביל ישירות לעמוד המוצר.",
+   "entries": [
+    {
+     "name": "ONE",
+     "tag": "",
+     "pid": "one",
+     "status": "on",
+     "snap": "שניים הוטמעו, ארבעה פיתוחים כבר עובדים בשטח, אחד עם איפיון מאושר ומחכה לפיתוח, אחד מחכה לאישור האיפיון ותחילת עבודה משותפת עם האיפיון הקודם והאחרון מחכה לחתימה על הצעת המחיר.",
+     "done": "ארבעה פיתוחים עלו לסביבת אמת ועובדים בשטח בלי תקלות: הזמנת ספק להובלה, עדכון נהג בדיעבד, חובת עלות הובלה ופריסת הזמנה\nשני איפיונים נוספים הוטמעו: שינוי כמות משטחים בליקוט, וביטול אישור קבלה מתיק יבוא\nאיפיון המלקט לריבוי טפסים אושר",
+     "doing": "מעקב תיקי יבוא: סיימנו את סבב השאלות מול ONE.  מכאן אמורים להגיע הצעת מחיר ואיפיון סופי\nתעודת משלוח לריבוי טפסים: קיבלנו איפיון מתוקן, ממתין לאישור אחרון כדי להתחיל (עבודה משותפת עם איפיון המלקט לריבוי טפסים).\nחתימה על הצעת מחיר – מעקב לתיקי יבוא – איפיון יוליה",
+     "next": "הכנת דוח ההובלות הימיות לתיק יבוא, כשאלי יחזור מהחופשה"
+    },
+    {
+     "name": "Glassix",
+     "tag": "הסתיים והועבר לתפעול",
+     "pid": "glassix",
+     "status": "on",
+     "snap": "הסתיים. הדוחות נשלחים אוטומטית והמחלקות מתנהלות עצמאית.",
+     "done": "כל המחלקות מקבלות דוחות אוטומטית: יומי ב-7:30 מסכם ב- 15:00 ושבועי מצטבר בימי ראשון\nהניהול עבר למנהלי המחלקות.  אנחנו כבר לא בתמונה היומיומית\nכל התקלות והבקשות נסגרו או הועברו לתמיכה של Glassix",
+     "doing": "מעקב בלבד, וליווי המנהלים לפי הצורך\nעדכון הדוחות היוצאים מהמערכת למנהלים המנהלים כמה מחלקות ביחד, אין אפשרות בייצוא אוטומטי לייצא כמה מחלקות בו זמנית.",
+     "next": "לוודא שהדוחות יוצאים תקינים בשבועות הראשונים"
+    },
+    {
+     "name": "CRM",
+     "tag": "שלושה מודולים בעבודה",
+     "pid": "crm",
+     "status": "on",
+     "snap": "האיפיון של זימון דיירים סגור, \nמחלקת פרויקטים במסמך איפיון ראשוני, \nניהול ושיווק אדריכלים בעבודה",
+     "done": "זימון דיירים: האיפיון הושלם. ארבע פגישות עם מחלקת זימון דיירים, ואימות הנתונים מול ONE\nטבלת זימון דיירים: הגדרת שמות המשתנים שמתעדכנים לפי מספרי הפעולה\nמחלקת פרויקטים: ישיבת התנעה והיכרות עם המערכות, וחידוד התהליכים מול הצוות\nאדריכלים: פגישת התנעה בוצעה ורוב החומר נאסף\nפרויקטים: קבלת איפיון/הסבר/מסמכים ראשוניים על התהליך מקורל.",
+     "doing": "מסמך האיפיון של מחלקת פרויקטים בתהליך\nגיבוש מסמך האיפיון לניהול ושיווק אדריכלים",
+     "next": "זימון דיירים: פגישה עם חן והצוות שלה ביום שני להעברת האיפיון הסופי ואישורו.\nפרויקטים: פגישת איפיון שנייה עם עומרי ואחריה פגישת עומק עם דודי + גלי להבנת תהליך העבודה המדויקת והמרתו לאיפיון CRM .\nאדריכלים: פגישת איפיון עם עומרי, ואחריה פגישת המשך עם אלין ונועה"
+    },
+    {
+     "name": "מערכת המפרטים",
+     "tag": "",
+     "pid": "specs",
+     "status": "on",
+     "snap": "בשימוש יומיומי. \nהתחילה העבודה על עיצוב הקטלוג + ייבוא התמונות למערכת.",
+     "done": "דשבורד ומעקב שינויים במפרטים\nהמערכת בשימוש יומיומי (סהכ הוכנו 32 מפרטים מתוכם 13 נשלחו, דירות לא מכורות הוכנו סהכ 17). כרגע יש פגישה שבועית עם נועם לעדכונים ושיפורים המרוכזים על ידיה מכלל המשתמשים במחלקה.\nנבחר עיצוב הקטלוג ואופן עימוד המוצרים",
+     "doing": "פיתוח הקטלוג לפי העיצוב שנבחר\nשיפורי שמישות שעולים מהשטח, בטיפול שוטף\nיצירת נוהל חדש לניהול המחירים והתמונות והעברת אחראיות לגורמים הרלוונטיים.\nשמירת תמונות למקטים ללא תמונה.",
+     "next": "סחר + פרויקטים + שיווק: פגישה ביום שלישי על ניהול אתר המפרטים, תמונות מוצרים ,תמונות אווירה ונוהל העבודה החדש.\nהמשך סבב השינויים לפי מה שהמשתמשים מעלים."
+    },
+    {
+     "name": "מרכזיה",
+     "tag": "",
+     "pid": "pbx",
+     "status": "attn",
+     "snap": "האיפיון כמעט סגור, ממתינים לאישורור ממנהלי המחלקות בנוגע לשינויים שבוצעו. ממתינים ל firewall שיגיע לארץ ורכישת הטלפונים.",
+     "done": "האיפיון כמעט סגור, אחרי סבב שינויים\nנקבעה פגישה לאיפיון המרכזיה בסניפים ולשינוי המצב הקיים",
+     "doing": "אישורים אחרונים לאיפיון\nמעקב אחרי אספקת ה firewall .\nניסוח סופי של המלל שנשמע ללקוח",
+     "next": "רכישת הטלפונים"
+    },
+    {
+     "name": "פרויקטים נקודתיים",
+     "tag": "מ-4-5 שעות לכ-30 דקות",
+     "pid": "",
+     "status": "on",
+     "snap": "השוואת קטלוגים עם AI : מחצי יום עבודה לכ-30 דקות שרצות ברקע",
+     "done": "השוואת קטלוגים עם AI: קורל ביקשה דרך חכמה להשוות בין הקטלוג שמודי שלחו לקבלן לבין המוצרים שהוא מציג בקטלוג שלו. בדיקה ידנית אחת לוקחת חצי יום עבודה; עם AI זה ירד לכ-30 דקות ריצה ברקע ועוד כמה דקות הגדרה (חד פעמי). נחסכו שתי בדיקות נוספות שהיו בתור (9 שעות).",
+     "doing": "",
+     "next": "תהליך שכנראה יחזור על עצמו – יש תשתית לבנות כלי קבוע להשוואת קטלוגים ומפרטים, ואפשר להרחיב לתרחישים נוספים."
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "from": "2026-08-17",
+   "to": "2026-09-07",
+   "bottom": "",
+   "decisions": [
+    {
+     "type": "החלטה",
+     "title": "הצעת המחיר של Fireberry ל-CRM",
+     "text": "הצעת מחיר 14173 – 15 שעות אפיון, הטמעה והדרכה בעלות 8,250 ₪ לפני מע\"מ (9,735 ₪ כולל), בתוספת 1,000 ₪ חד-פעמי לחיבור המרכזייה. רישוי Professional 180 ₪ למשתמש לחודש (150 ₪ במסלול שנתי), ומודול Marketing 55 ₪. נדרשת הכרעה כדי לצאת לדרך."
+    },
+    {
+     "type": "החלטה",
+     "title": "בעלות על תמונות האווירה במערכת המפרטים",
+     "text": "הנושא תקוע כי כל גורם מפנה את האחריות לגורם אחר. ביום שלישי פגישת בוררות עם דן ותהל – נדרשת החלטה מי הבעלים של המשימה כדי שהיא תזוז."
+    },
+    {
+     "type": "לידיעה",
+     "title": "מרכזיה – מעבר עם המנהלים ותאריך עלייה לאוויר",
+     "text": "המיילים למנהלים יוצאים היום ועד סוף השבוע נעבור על האיפיון עם כולם. בפגישות האלה גם נחתום על ניוד הקווים. תאריך עלייה לאוויר ייקבע בהמשך."
+    }
+   ],
+   "next": "ONE: לקבל את אישור זיו למעקב תיקי יבוא ולשחרר לפיתוח, ולסגור מול זיו ויוליה את דוח ההובלות הימיות.\nמרכזיה: מעבר על האיפיון עם כלל המנהלים עד סוף השבוע, חתימה על ניוד הקווים וסיום קבצי השמע.\nCRM: להביא את הצעת Fireberry להכרעה, ואם מאושר – לחתום ולקבוע לוחות זמנים להקמה.\nמפרטים: פגישת בוררות עם דן ותהל לקביעת בעלות על תמונות האווירה, והשלמת תמונות המוצר מול טופז.\nGlassix: להפיץ את הסקרים ולוודא שהדוחות החדשים יוצאים תקינים.\nONE / AI: פגישה עם אלון, החלטה על פגישה עם ליבי מה-BI, ובירור המעבר לקריסטל 20.\nInteliChain: פגישת התנעה ביום שלישי מול יהודה והדר, והגדרת המשך התהליך.",
+   "entries": [
+    {
+     "name": "ONE",
+     "tag": "",
+     "pid": "one",
+     "status": "attn",
+     "snap": "מעקב תיקי יבוא: האפיון לפיתוח אושר על ידי יוליה, ממתין לזיו.\nיוליה רוצה להוסיף משהו לאיפיון, ממתין לקבלת אפיון חדש.\nהובלות ימיות: הדוח מוכן ובבדיקה.\nשני האפיונים של רותם, אחד בבדיקה ורותם כבר מצא בו באג, בתיקון אצל וואן. השני עם צפי עד אחרי החגים.",
+     "done": "מעקב תיקי יבוא: אחרי החתימה על הצעת המחיר התקבל האפיון לאישור פיתוח, בוצע שינוי באפיון, ממתין לקבלת אפיון חדש.\nמעקב הובלות ימיות: הדוח מוכן וניתן להוציא ממנו את כל הדאטה הרלוונטי.\nהתקבלו פרטי הקשר של ליבי – אחראית על ה BI בוואן – כרגע לא נראה שיש צורך ליצור איתה קשר בעקבות היכולות של Tango AI שנרצה להטמיע.",
+     "doing": "מעקב תיקי יבוא: ממתינים לקבלת אפיון מעודכן לאישור פיתוח\nהובלות ימיות : זיו בודק מול יוליה שהדוח מכיל את כל הפרטים.\nשני האפיונים של רותם -  קביעת מלקט לריבוי טפסים - הופץ לבדיקות אצלנו, רותם מצא באג, בטיפול וואן. יצירת תעודת משלוח לריבוי טפסים בהדפסה אחת למהלך – הצפי שיהיה מוכן אחרי החגים.\nדוחות: אנחנו עובדים עלCrystal גרסה 12 למרות שקיימת גרסה 20.",
+     "next": "קבלת אישור להתחלת פיתוח."
+    },
+    {
+     "name": "Glassix",
+     "tag": "",
+     "pid": "glassix",
+     "status": "on",
+     "snap": "הדוחות האוטומטיים רצים למנהלי מחלקות. \nנבנה דוח מנכ\"ל שיוצג בפגישה במידה והתוכנה תעבוד. הסקרים מוכנים ויופצו בקרוב.",
+     "done": "הדוחות האוטומטיים רצים למנהלי מחלקות.\nנשלח מייל לחידוד נהלים, אורן כותב כדי שיהיה ברור לכולם שהוא גם מקבל את הדוחות.\nנבנה דוח מנכ\"ל – יוצג וייבדק האם תקין במהלך הפגישה.\nנקבעה פגישת הסבר על עריכת הפלואו + סידור שלו",
+     "doing": "הסקרים הוכנו וממתינים לאישור לפני הפצה. עד כמה היית מרוצה מהטיפול בפנייה שלך? עד כמה היית מרוצה מהזמינות שלנו וממהירות המענה? עד כמה המידע והפתרון שקיבלת היו מקצועיים וברורים? מבוצעת בדיקה לגבי הצגת 2 שאלות נוספות במידה והלקוח הזין ציון נמוך בסקר.\nמעקב אחרי תקינות הדוחות החדשים בשבועות הראשונים.",
+     "next": "הפצת הסקרים במהלך השבוע."
+    },
+    {
+     "name": "CRM",
+     "tag": "",
+     "pid": "crm",
+     "status": "attn",
+     "snap": "הצעת המחיר ומסמך הדרישות של Fireberry התקבל. נשלח מייל חוזר לחידוד האיפיון.\nעדיין ללא מענה מ Monday.\nנשלח מסמך איפיון נוסף ל Fireberry , מחכה להצעת מחיר נוספת + מסמך דרישות.",
+     "done": "התקבל מסמך דרישות והצעת מחיר מ Fireberry.\nשיערוך זמן העבודה: 20 שעות אפיון + הטמעה.\nנשלח ל Monday האיפיון, ממתינים להצעת מחיר\nנשלח לFireberry האפיון השני, ממתינים להצעת מחיר + מסמך דרישות – צפי לקבלה ביום ראשון (חזרה מחופש של המנהלת לקוח שלנו - שני)",
+     "doing": "קבלת הצעת מחיר מ Monday על האפיון הראשון\nקבלת הצעת מחיר על האפיון השני מ Fireberry.\nנשלח מייל לחידוד מסמך הדרישות שהתקבל ודיוק האפיון הראשוני.",
+     "next": "לאחר דיוק האפיון: חתימה, לוח זמנים להקמה ותחילת הטמעה."
+    },
+    {
+     "name": "מערכת המפרטים",
+     "tag": "",
+     "pid": "specs",
+     "status": "attn",
+     "snap": "תיקונים שוטפים ועימוד הקטלוג התקדמו. \nתמונות האווירה תקועות בשל חוסר בעלות, נקבעה פגישת בוררות עם תהל ודן.",
+     "done": "בוצעו תיקונים שוטפים במערכת לפי מה שעולה בפגישה השבועית של נועם.\nנבנה עימוד הקטלוג.\nישנם 20 מפרטים שעובדים עליהם, 22 מפרטים שנשלחו מאז הקמת האתר ועוד 5 מפרטים נחתמו.",
+     "doing": "טופז עובדת על תמונות המוצר.\nתמונות אווירה: תקוע. כל גורם מפנה את האחריות לגורם אחר, ואין בעלות ברורה על המשימה.",
+     "next": "פגישת בוררות עם דן ותהל – להבין מה החסם, לקבוע מי אחראי על מה ולהתקדם עם התמונות אווירה."
+    },
+    {
+     "name": "מרכזיה",
+     "tag": "",
+     "pid": "pbx",
+     "status": "attn",
+     "snap": "האפיון נסגר מול לירון\nמיילים למנהלים יצאו אתמול ומילוי מסמך ניוד הטלפונים יבוצע עד סוף השבוע.",
+     "done": "בוצעה פגישת אפיון של שעתיים ופגישת המשך עם לירון – מנהלת הלקוח שלנו באומניטלקום.\nאושר מול כל מנהל הפלואו הייעודי של המחלקה שלו + אסטרטגיית יציאה מתור.\nאושר מול מחלקת השיווק המלל שיאמר בכל שלב במרכזיה + אושר מול המנהלים.\nנבחר קול ייעודי שישמש אותנו במרכזיה.",
+     "doing": "מיילים למנהלים נשלחו אתמול לגבי ניוד הטלפונים (מילוי טופס ייעודי). ניוד הטלפונים יתבצע ביום העלייה לאוויר.\nהכנת קבצי השמע למרכזיה – בעבודה, הוכנו 3 קטעי שמע מקולות שונים (נקבה) לצורך בחירת קול למרכזיה. שליחה לאומניטלקום + הטמעה.\nהכנת כל קבצי השמע לכלל המרכזיה.",
+     "next": "חתימה על ניוד הקווים.\nקביעת תאריך עלייה לאוויר\nFirewall מגיע ב 03.09 , אורך התקנה כשבוע – עד ה 10.09"
+    },
+    {
+     "name": "פרויקטים חדשים",
+     "tag": "",
+     "pid": "",
+     "status": "on",
+     "snap": "Intelichain – פגישת התנעה ביום שני הקרוב.\nבוצעה פגישה עם ONE ו Tango על הצגת יכולות AI דוחות ו BI.",
+     "done": "בוצעה שיחת היכרות עם יהודה, מנהל הלקוח שלנו שיהיה אחראי ביחד עם הדר על הפרויקט.\nנקבעה פגישת התנעה עם InteliChain ליום שלישי הקרוב, תחילת התהליך.\nנקבעה פגישה עם אלון מ ONE ועמק מ TANGO להצגת יכולות AI ויוז קייסים",
+     "doing": "בחינת יכולות ה AI וה BI של וואן מול הצרכים שלנו.\nקריסטל 12 מול 20 מה העדכון פותח לנו מבחינת הדוחות ויכולות התממשקות עם כלים חיצוניים, אם בכלל.\nממתינים להצעת מחיר מ ONE בנוגע לאינטגרציה עם TANGO והטמעת ה AI.",
+     "next": "אחרי הפגישה עם אלון: החלטה האם נדרשת גם פגישה עם ליבי (BI), או שהיכולות שהוצגו מספיקות לנו. (לא נדרשת פגישה עם ליבי, היכולות שהוצגו כיסו הכל)."
+    }
+   ]
+  },
+  {
+   "id": "r3",
+   "from": "2026-09-16",
+   "to": "2026-10-11",
+   "bottom": "",
+   "decisions": [
+    {
+     "type": "החלטה",
+     "title": "מחירי ספק ל-InteliChain",
+     "text": "האם ניתן להעביר ל-InteliChain את מחירי הספק שלנו? הדאטה אמורה לצאת אליהם עד סוף השבוע, ולכן נדרשת הכרעה לפני כן."
+    },
+    {
+     "type": "לידיעה",
+     "title": "Fireberry – שאלות אחרונות לפני חתימה",
+     "text": "מכסה חודשית והתאמתה לאיפיון, ועדכון ההסכם כך שביטול מנוי שנתי לא יחייב על כל השנה ועדיין נקבל את ההנחה."
+    },
+    {
+     "type": "לידיעה",
+     "title": "מרכזיה – מבנה המספרים",
+     "text": "פגישה ב-12.10 על הצעת זיו: במקום לנייד מבנה מספרים מסורבל, להחליף את המספרים ולבנות נכון מאפס."
+    },
+    {
+     "type": "לידיעה",
+     "title": "Claude Teams למחלקה",
+     "text": "נפתח ארגון Claude Teams למחלקה, לעבודה משותפת של הצוות."
+    }
+   ],
+   "next": "מרכזיה: הכרעה על מבנה המספרים, קבלת המכשירים מאומניטלקום והפצה לסניפים.\nCRM: תשובות Fireberry על המכסה ותנאי הביטול, עדכון ההסכם וחתימה.\nGlassix: פגישה ב-13.10 על ניהול הבוט, תעדוף אדריכלים מול ישראלה ובירור התבניות מול אופיר.\nInteliChain: הכרעה על מחירי ספק ושליחת הדאטה עד סוף השבוע.\nטכנאים: שיחת צורך עם רותם ופגישה עם רותם ושיראל על אתר הטכנאים.\nצוות: תחילת העבודה על בוט הוואטסאפ וקביעת מוביל, והשלמת ממשק ה-QR לנדב.\nONE ופורטל קבלנים: צפי ממעיין לשני האיפיונים, ותחילת התיקונים והפיצ'רים בפורטל.",
+   "entries": [
+    {
+     "name": "ONE",
+     "tag": "",
+     "pid": "one",
+     "status": "attn",
+     "snap": "שני איפיונים בפיתוח מול מעיין – \nרותם (תמ\"ש לריבוי טפסים) \nיוליה (תוכנית OV לתיקי יבוא). \nבהמשך: פיתוח API למערכת ה-CRM.",
+     "done": "בפגישות איפיון ה-CRM חודד מה מצופה מ-ONE ואיזה דאטה עלינו להעביר אליה.",
+     "doing": "רותם – יצירת תמ\"ש לריבוי טפסים: בפיתוח מול מעיין.\nיוליה – תוכנית OV למעקב ועדכון תיקי יבוא: בפיתוח מול מעיין.",
+     "next": "קבלת צפי סיום ממעיין לשני האיפיונים.\nבהמשך: פיתוח API בין ONE למערכת ה-CRM."
+    },
+    {
+     "name": "Glassix",
+     "tag": "",
+     "pid": "glassix",
+     "status": "on",
+     "snap": "דאשבורד דוחות חדש לניתוח יומי, שבועי וחודשי. \nב-13.10 פגישה על השליטה בבוט. בבדיקה: תעדוף אדריכלים ותבניות שלא אושרו.",
+     "done": "נבנה דאשבורד דוחות ל-Glassix (אליה): כניסה יום-יום וניתוח לאחור ברמה יומית, שבועית וחודשית.\nעדכון משתמשים – נוספו והוסרו משתמשים לפי הצורך.\nאליה ואילנה צפו בסרטוני ההדרכה ונחפפו על המערכת.",
+     "doing": "בקשת ישראלה: לצרף את האדריכלים ל-Glassix עם קדימות בתור על פני פניות אחרות. בבדיקה מול Glassix ומול ישראלה – מה היא רוצה ומה אפשרי.\nבירור מול אופיר, מנהלת הלקוח שלנו ב-Glassix, מדוע תבניות לא מאושרות.",
+     "next": "פגישה ב-13.10 על ניהול הבוט – שהידע והשליטה בתסריטי השיחה יהיו אצלנו ולא אצל Glassix.\nסגירת אופן היישום של תעדוף האדריכלים."
+    },
+    {
+     "name": "CRM",
+     "tag": "",
+     "pid": "crm",
+     "status": "attn",
+     "snap": "האיפיונים הושלמו והועברו לקבלת הצעת מחיר, נשאר קבלת הצעת מחיר לניהול + שיווק אדריכלים. שאלות אחרונות ל-Fireberry על המכסה ותנאי הביטול לפני החתימה יבוצעו ב-11.10.",
+     "done": "פגישות איפיון לדיוק הדרישות – כדי ש-Fireberry ו-ONE ידעו מה מצופה מהן ואיזה דאטה עלינו להעביר.\nעומרי השלים את איפיוני ה-CRM והעביר חפיפה מסודרת לאליה.\nהאיפיונים הועברו לקבלת הצעת מחיר בנושא האדריכלים.\nאליה ואילנה קראו את כל האיפיונים, ובוצעו איתם ישיבות חפיפה והסבר לעומק.",
+     "doing": "פגישה עם Fireberry ב-11.10 לבירור השאלות הפתוחות שלי ושל דנה לפני החתימה על החוזה:\nמכסה חודשית – מה המכסה, הערכת העלות, והאם היא מתאימה לאיפיון שלנו.\nעדכון ההסכם – אפשרות לבטל מנוי שנתי בלי חיוב על כל השנה, תוך שמירה על ההנחה.",
+     "next": "קבלת תשובות ועדכון ההסכם בהתאם.\nקבלת הצעת המחיר בנושא האדריכלים.\nחתימה על החוזה ותחילת ההקמה."
+    },
+    {
+     "name": "מרכזיה",
+     "tag": "",
+     "pid": "pbx",
+     "status": "attn",
+     "snap": "האיפיון סופי והמכשירים שולמו. \nנותר להכריע על מבנה המספרים – פגישה ב-12.10 על הצעת זיו.",
+     "done": "האיפיון מול לירון הושלם והוא סופי.\nבוצע תשלום על רכישת המכשירים הנייחים.\nחפיפה על איפיון המרכזיה עם אליה ואילנה.",
+     "doing": "אופן ניוד המספרים: פגישה ב-12.10 על הצעת זיו – להחליף את המספרים לגמרי ולבנות את המבנה מאפס, במקום להמשיך טלאי על טלאי.\nהמכשירים יגיעו אלינו עם אורן ולירון מאומניטלקום, ומכאן נשלח אותם לסניפים – חיסכון בעלויות משלוח.",
+     "next": "הכרעה על מבנה המספרים: ניוד הקיים או החלפה מלאה.\nקבלת המכשירים והפצה לסניפים.\nקביעת תאריך עלייה לאוויר."
+    },
+    {
+     "name": "מפרטים ופורטל קבלנים",
+     "tag": "",
+     "pid": "specs",
+     "status": "on",
+     "snap": "תיקונים שוטפים + טובה מקבלן (יוחאי).\n\"הפורמט החדש ממש נוח ויפה – כל הכבוד\". \nפורטל הקבלנים עבר לניהול שלנו – דומיין, מסד נתונים ופיצ'רים חדשים.",
+     "done": "מערכת המפרטים: תיקונים שוטפים, והתקבלה מילה טובה מקבלן.\nפורטל הקבלנים: התקבל מדיאנה דף HTML, נרכש דומיין ייעודי והאתר חובר למסד נתונים – המידע נשמר ולא הולך לאיבוד.\nנוספו לפורטל פיצ'רים לפי הצורך של דיאנה.\nישיבת העברת מקל לניהול שלנו והיכרות עם המערכת מקצה לקצה.",
+     "doing": "ריכוז הפיצ'רים והתיקונים העתידיים לפורטל הקבלנים.",
+     "next": "ביצוע התיקונים והפיצ'רים בפורטל הקבלנים.\nהמשך תיקונים שוטפים במערכת המפרטים."
+    },
+    {
+     "name": "InteliChain",
+     "tag": "",
+     "pid": "intelichain",
+     "status": "attn",
+     "snap": "אלי מייצא את הדאטה עד סוף השבוע לבקשת הדר. \nממתין להכרעת אורן האם ניתן להעביר להם מחירי ספק.",
+     "done": "פגישת איפיון עם InteliChain, יחד עם יגאל ועזר.\nבשבוע שעבר התקבלה בקשה לדאטה – הדר ביקשה מאלי את הנתונים להעברה.",
+     "doing": "אלי מייצא ומארגן את הדאטה שהתבקשה – יישלח עד סוף השבוע.\nבירור מול אורן: האם ניתן להעביר ל-InteliChain מחירי ספק.",
+     "next": "שליחת הדאטה ל-InteliChain.\nהכרעה על מחירי ספק (בשקף ההחלטות)."
+    },
+    {
+     "name": "פרויקטים חדשים",
+     "tag": "",
+     "pid": "",
+     "status": "on",
+     "snap": "בעבודה: אתר לניהול טכנאים לרותם, ממשק QR אוטומטי לנדב \nוסוכן וואטסאפ אישי למחלקה.",
+     "done": "הוגדר בוט וואטסאפ למחלקה – סוכן אישי שנעדכן בו מה בוצע, והוא יעדכן את פורטל הפרויקטים, יקפיץ התראות ויעקוב אחר משימות הצוות.\nאילנה עדכנה את פורטל הפרויקטים של המחלקה.",
+     "doing": "אתר לניהול טכנאים לרותם (אליה) – שיחת צורך ראשונית עם רותם.\nממשק לנדב ליצירת QR אוטומטי לפריטים שלו (אילנה).",
+     "next": "פגישה עם רותם ושיראל על אתר הטכנאים.\nבוט הוואטסאפ: תחילת עבודה השבוע. טרם נקבע מוביל – ככל הנראה אליה."
+    },
+    {
+     "name": "המחלקה",
+     "tag": "",
+     "pid": "",
+     "status": "on",
+     "snap": "אליה (מ-01.10) ואילנה (מ-07.10) נקלטו ועברו חפיפה מלאה, וכבר מוציאים עבודה. נפתח Claude Teams למחלקה.",
+     "done": "אליה (מ-01.10): נכנס לתפקיד במקום עומרי אחרי חפיפה מסודרת על איפיוני ה-CRM. בנה דאשבורד דוחות ל-Glassix, ובונה אתר לניהול טכנאים לרותם.\nאילנה (מ-07.10): בונה ממשק לנדב ליצירת QR אוטומטי לפריטים שלו, ועדכנה את פורטל הפרויקטים של המחלקה.\nחפיפה וקליטה: שניהם צפו בסרטוני Glassix, קראו את כל איפיוני ה-CRM ועברו ישיבות הסבר, ועברו על איפיון המרכזיה. לצד זה – פגישות רבות לחידוד נהלי העבודה.\nנפתח ארגון Claude Teams למחלקה.",
+     "doing": "",
+     "next": ""
+    }
+   ]
+  }
+ ]
 }</script>
 <script id="app-script">(function () {
   "use strict";
@@ -788,7 +1143,7 @@ html.snap{scroll-snap-type:y proximity}
       (it.etaNote || editing ? ed("span", path + ".etaNote", it.etaNote, "en", "הערה לצפי (לא חובה)") : "") + "</div>";
   }
   function svgArrow(dir) {
-    var d = dir === "left" ? "M10 3 5 8l5 5" : "M6 3l5 5-5 5";
+    var d = dir === "left" ? "M10 3 5 8l5 5" : dir === "up" ? "M3 10l5-5 5 5" : dir === "down" ? "M3 6l5 5 5-5" : "M6 3l5 5-5 5";
     return '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   }
 
@@ -830,7 +1185,7 @@ html.snap{scroll-snap-type:y proximity}
         summaryLine(it, path, "summary") +
         ed("p", path + ".desc", it.desc, "desc", "הסבר מורחב על הפרויקט") +
         budgetBlock(it, path, "budget") +
-        etaBlock(it, path, "eta") + statusBlocks(it, path) + "</article>";
+        etaBlock(it, path, "eta") + "</article>";
     }
     if (mode === "compact") {
       return '<button type="button" class="tile" data-open="' + si + "-" + ii + '" aria-haspopup="dialog"' + st + ">" +
@@ -850,6 +1205,220 @@ html.snap{scroll-snap-type:y proximity}
     '<clipPath id="ring-b"><polygon points="200,26 200,200 26,200"/></clipPath></defs><g class="spin">' +
     '<g clip-path="url(#ring-a)"><circle class="arc a1" cx="100" cy="100" r="71.3" pathLength="360" transform="rotate(135 100 100)"/></g>' +
     '<g clip-path="url(#ring-b)"><circle class="arc a2" cx="100" cy="100" r="71.3" pathLength="360" transform="rotate(135 100 100)"/></g></g></svg>';
+
+  /* ---------- bi-weekly reports ---------- */
+  var RF_KEY = "mody-reports-filter";
+  var rf = { mode: "latest" }, editRid = null;
+  try { var rfs = JSON.parse(localStorage.getItem(RF_KEY) || "null"); if (rfs && rfs.mode) rf = rfs; } catch (e) {}
+  function saveRf() { try { localStorage.setItem(RF_KEY, JSON.stringify(rf)); } catch (e) {} }
+  var COLS = [["done", "בוצע"], ["doing", "בתהליך"], ["next", "הבא בתור"]];
+  var ST = { on: "במסלול", attn: "דורש תשומת לב" };
+  var LEGEND = '<span class="r-legend"><span><i class="st-dot on"></i>במסלול</span><span><i class="st-dot attn"></i>דורש תשומת לב</span></span>';
+  function reps() { return (data.reports || []).slice().sort(function (a, b) { return a.from < b.from ? -1 : a.from > b.from ? 1 : 0; }); }
+  function fmtD(iso, yr) { if (!iso) return "?"; var p = String(iso).split("-"); return p[2] + "." + p[1] + (yr ? "." + p[0] : ""); }
+  function repLabel(r, yr) { return "\u2066" + fmtD(r.from) + "–" + fmtD(r.to, yr) + "\u2069"; }
+  function isoAdd(iso, days) { var p = iso.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2] + days); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function todayISO() { var d = new Date(); return isoAdd(d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(), 0); }
+  function selReps() {
+    var all = reps();
+    if (!all.length) return [];
+    if (rf.mode === "all") return all;
+    if (rf.mode === "range") return all.filter(function (r) { return (!rf.from || r.to >= rf.from) && (!rf.to || r.from <= rf.to); });
+    if (rf.mode === "one") { var f = all.filter(function (r) { return r.id === rf.id; }); if (f.length) return f; }
+    return [all[all.length - 1]];
+  }
+  function lines(t) { return String(t || "").split(/\n+/).map(function (x) { return x.trim(); }).filter(Boolean); }
+  function ul(t, cls) { var l = lines(t); return l.length ? '<ul class="r-ul ' + (cls || "") + '">' + l.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : ""; }
+  var EMPTY = '<p class="r-empty">—</p>';
+  function stDot(s) { return s && ST[s] ? '<i class="st-dot ' + s + '" title="' + ST[s] + '"></i>' : ""; }
+  function stPill(s) { return s && ST[s] ? '<span class="r-st ' + s + '">' + ST[s] + "</span>" : ""; }
+  function findProject(pid) {
+    var r = null;
+    data.sections.forEach(function (s, si) { s.items.forEach(function (it, ii) { if (it.id === pid) r = { si: si, ii: ii }; }); });
+    return r;
+  }
+  function projLink(pid) {
+    var p = pid ? findProject(pid) : null;
+    return p ? '<button type="button" class="r-link" data-open="' + p.si + "-" + p.ii + '">לכרטיס הפרויקט</button>' : "";
+  }
+
+  function filterBar() {
+    var all = reps(), sel = selReps();
+    var one = (rf.mode === "one" || rf.mode === "latest") && sel.length ? sel[0].id : null;
+    var h = '<div class="r-filter"><div class="r-chips" role="group" aria-label="בחירת תקופה">';
+    all.slice().reverse().forEach(function (r, i) {
+      h += '<button type="button" data-rsel="' + esc(r.id) + '" aria-pressed="' + (one === r.id) + '">' + repLabel(r) + (i === 0 ? ' <small>אחרון</small>' : "") + "</button>";
+    });
+    h += '<button type="button" data-rsel="__all" aria-pressed="' + (rf.mode === "all") + '">כל התקופות</button></div>';
+    h += '<div class="r-range' + (rf.mode === "range" ? " on" : "") + '"><span>טווח:</span>' +
+      '<label>מ-<input type="date" data-rdate="from" value="' + esc(rf.mode === "range" ? rf.from || "" : "") + '"></label>' +
+      '<label>עד <input type="date" data-rdate="to" value="' + esc(rf.mode === "range" ? rf.to || "" : "") + '"></label></div>';
+    return h + "</div>";
+  }
+
+  function entryHTML(e, id) {
+    return '<article class="r-entry" id="' + id + '"><header>' + stDot(e.status) + "<h4>" + esc(e.name) + "</h4>" +
+      (e.tag ? '<span class="r-tag">' + esc(e.tag) + "</span>" : "") + stPill(e.status) + projLink(e.pid) + "</header>" +
+      '<div class="r-cols">' + COLS.map(function (c) {
+        return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + (ul(e[c[0]]) || EMPTY) + "</div>";
+      }).join("") + "</div></article>";
+  }
+  function extrasHTML(r, label) {
+    var h = "", pre = label ? '<span class="r-pl">' + repLabel(r) + "</span>" : "";
+    if (lines(r.bottom).length) h += '<div class="r-block"><h4 class="r-bh">שורה תחתונה ' + pre + "</h4>" + ul(r.bottom, "r-bottom") + "</div>";
+    if (r.decisions.length) h += '<div class="r-block"><h4 class="r-bh">לדיון והכרעה ' + pre + '</h4><div class="r-decs">' + r.decisions.map(function (d) {
+      return '<div class="r-dec' + (d.type === "החלטה" ? " dec" : "") + '"><span class="r-dtype">' + esc(d.type) + "</span><b>" + esc(d.title) + "</b>" + (d.text ? "<p>" + esc(d.text) + "</p>" : "") + "</div>";
+    }).join("") + "</div></div>";
+    if (!label && lines(r.next).length) h += '<div class="r-block"><h4 class="r-bh">מה הלאה – השבועיים הבאים</h4><ol class="r-next">' +
+      lines(r.next).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+    return h;
+  }
+  function reportOne(r) {
+    var h = '<div class="r-title"><h3>דיווח ' + repLabel(r, true) + "</h3>" + LEGEND + "</div>";
+    if (r.entries.length) {
+      h += '<div class="r-snap">' + r.entries.map(function (e, i) {
+        return '<button type="button" class="r-card" data-rjump="re-' + esc(r.id) + "-" + i + '"><span class="r-card-h">' + stDot(e.status) + "<b>" + esc(e.name) + "</b></span>" +
+          (e.snap ? '<span class="r-card-t">' + esc(e.snap) + "</span>" : "") + "</button>";
+      }).join("") + "</div>";
+      h += r.entries.map(function (e, i) { return entryHTML(e, "re-" + r.id + "-" + i); }).join("");
+    }
+    return h + extrasHTML(r, false);
+  }
+  function reportMulti(list) {
+    var groups = [], idx = {};
+    list.forEach(function (r) {
+      r.entries.forEach(function (e) {
+        var k = e.pid || e.name;
+        if (!(k in idx)) { idx[k] = groups.length; groups.push({ rows: [] }); }
+        groups[idx[k]].rows.push({ r: r, e: e });
+      });
+    });
+    var h = '<div class="r-title"><h3>' + list.length + " דיווחים · " + repLabel({ from: list[0].from, to: list[list.length - 1].to }, true) + "</h3>" + LEGEND + "</div>";
+    groups.forEach(function (g) {
+      var lastRow = g.rows[g.rows.length - 1], last = lastRow.e;
+      h += '<article class="r-entry r-hist"><header>' + stDot(last.status) + "<h4>" + esc(last.name) + "</h4>" + stPill(last.status) + projLink(last.pid) + "</header>" +
+        '<div class="r-hist-body"><div class="r-col c-done"><span class="r-col-h">מה בוצע לאורך התקופה</span>' +
+        g.rows.map(function (x) { return '<div class="r-period"><span class="r-pl">' + repLabel(x.r) + "</span>" + (ul(x.e.done) || EMPTY) + "</div>"; }).join("") + "</div>" +
+        '<div class="r-col c-doing"><span class="r-col-h">בתהליך <small>(נכון ל-' + fmtD(lastRow.r.to) + ")</small></span>" + (ul(last.doing) || EMPTY) +
+        '<span class="r-col-h r-col-h2">הבא בתור</span>' + (ul(last.next) || EMPTY) + "</div></div></article>";
+    });
+    list.slice().reverse().forEach(function (r) { h += extrasHTML(r, true); });
+    var lastR = list[list.length - 1];
+    if (lines(lastR.next).length) h += '<div class="r-block"><h4 class="r-bh">מה הלאה <span class="r-pl">מהדיווח ' + repLabel(lastR) + '</span></h4><ol class="r-next">' +
+      lines(lastR.next).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+    return h;
+  }
+
+  function curEditRep() {
+    var all = reps(), r = null;
+    all.forEach(function (x) { if (x.id === editRid) r = x; });
+    if (!r && all.length) { var sel = selReps(); r = sel.length === 1 ? sel[0] : all[all.length - 1]; }
+    return r;
+  }
+  function projectOptions(pid) {
+    var h = "";
+    data.sections.forEach(function (s) {
+      h += '<optgroup label="' + esc(s.title || "ללא כותרת") + '">' +
+        (s.kind === "sub" ? '<option value="' + esc(s.id) + '"' + (pid === s.id ? " selected" : "") + ">" + esc(s.title) + " (כל הקבוצה)</option>" : "") +
+        s.items.map(function (it) { return '<option value="' + esc(it.id) + '"' + (pid === it.id ? " selected" : "") + ">" + esc(it.name || "ללא שם") + "</option>"; }).join("") + "</optgroup>";
+    });
+    return h;
+  }
+  function reportEditor() {
+    var r = curEditRep(), all = reps();
+    var h = '<div class="r-edit-bar"><label>דיווח לעריכה <select data-rpick>' + all.slice().reverse().map(function (o) {
+      return '<option value="' + esc(o.id) + '"' + (r && o.id === r.id ? " selected" : "") + ">" + repLabel(o, true) + "</option>";
+    }).join("") + "</select></label>" +
+      '<button type="button" class="primary" data-ract="new">+ דיווח חדש</button>' + (r ? '<button type="button" data-ract="delrep">מחיקת הדיווח</button>' : "") + "</div>";
+    if (!r) return h + '<p class="r-empty">עדיין אין דיווחים. לחץ על "דיווח חדש".</p>';
+    var rp = "reports." + data.reports.indexOf(r);
+    h += '<p class="r-hint">כל שורה ברשימה היא פריט נפרד. "דיווח חדש" מעתיק את התחומים מהדיווח האחרון – "בוצע" מתרוקן, ו"בתהליך" ו"הבא בתור" נשארים לעדכון.</p>';
+    h += '<div class="r-dates"><label>מתאריך <input type="date" data-rfield="from" value="' + esc(r.from) + '"></label><label>עד תאריך <input type="date" data-rfield="to" value="' + esc(r.to) + '"></label></div>';
+    r.entries.forEach(function (e, i) {
+      var ep = rp + ".entries." + i, n = r.entries.length;
+      h += '<article class="r-entry r-ed" data-ei="' + i + '"><div class="tile-tools">' +
+        '<button type="button" data-ract="st">' + stDot(e.status) + (ST[e.status] || "ללא סטטוס") + "</button>" +
+        '<select data-rpid="' + i + '" aria-label="קישור לפרויקט"><option value="">ללא קישור לפרויקט</option>' + projectOptions(e.pid) + "</select>" +
+        '<button type="button" data-ract="eup" aria-label="הזזה למעלה"' + (i === 0 ? " disabled" : "") + ">" + svgArrow("up") + "</button>" +
+        '<button type="button" data-ract="edown" aria-label="הזזה למטה"' + (i === n - 1 ? " disabled" : "") + ">" + svgArrow("down") + "</button>" +
+        '<button type="button" data-ract="edel">מחיקה</button></div>' +
+        "<header>" + ed("h4", ep + ".name", e.name, "", "שם התחום") + ed("span", ep + ".tag", e.tag, "r-tag", "תגית (לא חובה)") + "</header>" +
+        '<div class="r-snap-ed"><span class="r-col-h">תמונת מצב</span>' + ed("p", ep + ".snap", e.snap, "", "משפט או שניים – איפה התחום עומד") + "</div>" +
+        '<div class="r-cols">' + COLS.map(function (c) {
+          return '<div class="r-col c-' + c[0] + '"><span class="r-col-h">' + c[1] + "</span>" + ed("p", ep + "." + c[0], e[c[0]], "r-lines", "שורה לכל פריט") + "</div>";
+        }).join("") + "</div></article>";
+    });
+    h += '<button type="button" class="r-add" data-ract="eadd">+ הוספת תחום</button>';
+    h += '<div class="r-block"><h4 class="r-bh">שורה תחתונה</h4>' + ed("p", rp + ".bottom", r.bottom, "r-lines", "שורה לכל נקודה (לא חובה)") + "</div>";
+    h += '<div class="r-block"><h4 class="r-bh">לדיון והכרעה</h4><div class="r-decs">' + r.decisions.map(function (d, i) {
+      var dp = rp + ".decisions." + i;
+      return '<div class="r-dec' + (d.type === "החלטה" ? " dec" : "") + '" data-di="' + i + '"><div class="tile-tools"><button type="button" data-ract="dtype">' + esc(d.type) +
+        '</button><button type="button" data-ract="ddel">מחיקה</button></div>' + ed("b", dp + ".title", d.title, "", "נושא") + ed("p", dp + ".text", d.text, "", "פירוט") + "</div>";
+    }).join("") + '<button type="button" class="r-add" data-ract="dadd">+ הוספת נושא</button></div></div>';
+    h += '<div class="r-block"><h4 class="r-bh">מה הלאה – השבועיים הבאים</h4>' + ed("p", rp + ".next", r.next, "r-lines", "שורה לכל משימה") + "</div>";
+    return h;
+  }
+  function reportsHTML() {
+    if (!editing && !(data.reports || []).length) return "";
+    var h = '<section class="section reports" aria-labelledby="rep-h"><div class="sec-head"><h2 id="rep-h">דיווחים דו-שבועיים</h2></div>';
+    if (editing) return h + reportEditor() + "</section>";
+    var sel = selReps();
+    h += filterBar();
+    if (!sel.length) h += '<p class="r-empty r-none">אין דיווחים בטווח שנבחר.</p>';
+    else if (sel.length === 1) h += reportOne(sel[0]);
+    else h += reportMulti(sel);
+    return h + "</section>";
+  }
+  function reportAct(b) {
+    var act = b.getAttribute("data-ract"), r = curEditRep();
+    function armed() { if (b.classList.contains("armed")) return true; b.classList.add("armed"); b.textContent = "בטוח?"; return false; }
+    if (act === "new") {
+      var all = reps(), prev = all[all.length - 1] || null;
+      var from = prev ? isoAdd(prev.to, 1) : todayISO();
+      var nr = { id: "r" + Date.now().toString(36), from: from, to: isoAdd(from, 13), bottom: "", decisions: [], next: "",
+        entries: prev ? prev.entries.map(function (e) { return { name: e.name, tag: e.tag, pid: e.pid, status: e.status, snap: e.snap, done: "", doing: e.doing, next: e.next }; }) : [] };
+      data.reports.push(nr); editRid = nr.id; render(); toast("נוצר דיווח חדש. עדכן ולחץ שמירה"); return;
+    }
+    if (!r) return;
+    if (act === "delrep") { if (!armed()) return; data.reports.splice(data.reports.indexOf(r), 1); editRid = null; render(); return; }
+    if (act === "eadd") { r.entries.push({ name: "", tag: "", pid: "", status: "on", snap: "", done: "", doing: "", next: "" }); render(); return; }
+    if (act === "dadd") { r.decisions.push({ type: "החלטה", title: "", text: "" }); render(); return; }
+    var en = b.closest("[data-ei]"), dn = b.closest("[data-di]");
+    if (en) {
+      var i = +en.getAttribute("data-ei"), E = r.entries;
+      if (act === "st") E[i].status = E[i].status === "on" ? "attn" : E[i].status === "attn" ? "" : "on";
+      else if (act === "edel") { if (!armed()) return; E.splice(i, 1); }
+      else { var j = act === "eup" ? i - 1 : i + 1; if (j < 0 || j >= E.length) return; var t = E[i]; E[i] = E[j]; E[j] = t; }
+      render(); return;
+    }
+    if (dn) {
+      var k = +dn.getAttribute("data-di"), D = r.decisions;
+      if (act === "dtype") D[k].type = D[k].type === "החלטה" ? "לידיעה" : "החלטה";
+      else if (act === "ddel") { if (!armed()) return; D.splice(k, 1); }
+      render();
+    }
+  }
+  function sectionAct(b) {
+    var act = b.getAttribute("data-sact"), S = data.sections;
+    if (act === "add") { S.push({ id: "s" + Date.now().toString(36), kind: "main", title: "", intro: "", note: "", items: [] }); render(); return; }
+    var box = b.closest("[data-si]"), i = +box.getAttribute("data-si");
+    if (act === "kind") S[i].kind = S[i].kind === "sub" ? "main" : "sub";
+    else if (act === "del") {
+      if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = S[i].items.length ? "למחוק כולל " + S[i].items.length + " פרויקטים?" : "למחוק?"; return; }
+      S.splice(i, 1);
+    } else { var j = act === "up" ? i - 1 : i + 1; if (j < 0 || j >= S.length) return; var t = S[i]; S[i] = S[j]; S[j] = t; }
+    render();
+  }
+  /* the latest report entry linked to a project (or to its group), within the selected period */
+  function projReportHTML(x) {
+    var hit = null;
+    selReps().forEach(function (r) { r.entries.forEach(function (e) { if (e.pid && (e.pid === x.it.id || e.pid === x.s.id)) hit = { r: r, e: e }; }); });
+    if (!hit) return statusBlocks(x.it, "");
+    var cols = COLS.filter(function (c) { return lines(hit.e[c[0]]).length; });
+    if (!cols.length) return "";
+    return '<div class="dl-rep"><span class="dl-rep-h">מתוך הדיווח ' + repLabel(hit.r, true) + "</span>" + stPill(hit.e.status) +
+      '<div class="status">' + cols.map(function (c) { return '<div class="st st-' + c[0] + '"><span class="st-h">' + c[1] + "</span>" + ul(hit.e[c[0]]) + "</div>"; }).join("") + "</div></div>";
+  }
 
   /* ---------- views ---------- */
   var VIEW_KEY = "mody-projects-view";
@@ -884,12 +1453,21 @@ html.snap{scroll-snap-type:y proximity}
     var h = "";
     data.sections.forEach(function (s, si) {
       if (!editing && !s.items.length) return;
-      h += secOpen(s, si) + '<div class="wall' + (anim ? " pending" : "") + '">';
+      h += secOpen(s, si, editing ? secTools(s, si) : "") + '<div class="wall' + (anim ? " pending" : "") + '">';
       s.items.forEach(function (it, ii) { h += tileHTML(it, si, ii, s.items.length, ii); });
       if (editing) h += '<button type="button" class="tile add" data-act="add" data-si="' + si + '">+ הוספת פרויקט</button>';
       h += "</div>" + secClose(s, si);
     });
+    if (editing) h += '<button type="button" class="sec-add" data-sact="add">+ הוספת כותרת חדשה</button>';
     return h;
+  }
+  function secTools(s, si) {
+    var n = data.sections.length;
+    return '<div class="tile-tools sec-tools" data-si="' + si + '">' +
+      '<button type="button" data-sact="up" aria-label="הזזת הכותרת למעלה"' + (si === 0 ? " disabled" : "") + ">" + svgArrow("up") + "</button>" +
+      '<button type="button" data-sact="down" aria-label="הזזת הכותרת למטה"' + (si === n - 1 ? " disabled" : "") + ">" + svgArrow("down") + "</button>" +
+      '<button type="button" data-sact="kind">' + (s.kind === "sub" ? "כותרת משנה" : "כותרת ראשית") + "</button>" +
+      '<button type="button" data-sact="del">מחיקת כותרת</button></div>';
   }
 
   function mosaicHTML(anim) {
@@ -1012,7 +1590,7 @@ html.snap{scroll-snap-type:y proximity}
           (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
         '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
         (it.desc ? '<p class="dl-desc sc-desc"><span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span></p>" : "") +
-        statusBlocks(it, "") +
+        projReportHTML(x) +
         (last && x.s.note ? '<p class="sc-note">' + esc(x.s.note) + "</p>" : "") +
         "</div></section>";
       nav += '<button type="button" data-scene="' + k + '" aria-label="' + esc(it.name) + '"><span class="st-tip">' + esc(it.name) + "</span>" + MARK + "</button>";
@@ -1040,6 +1618,7 @@ html.snap{scroll-snap-type:y proximity}
 
     var mainCls = "wrap view-" + v + (v === "cards" ? (showFull ? " mode-full" : " mode-compact") : "");
     h += '<main class="' + mainCls + '">';
+    if (v !== "story") h += reportsHTML();
     if (v === "cards") h += cardsHTML(anim);
     else if (v === "mosaic") h += mosaicHTML(anim);
     else if (v === "timeline") h += timelineHTML(anim);
@@ -1203,7 +1782,7 @@ html.snap{scroll-snap-type:y proximity}
         (it.etaNote ? '<span class="en">' + esc(it.etaNote) + "</span>" : "") + "</div>" : "") +
       '<div class="dl-eta dl-budget">' + budgetRows(it, "") + "</div></div>" +
       (it.desc ? '<p class="dl-desc">' + (typed ? '<span class="typed"></span><span class="caret" aria-hidden="true"></span><span class="ghost">' + esc(it.desc) + "</span>" : esc(it.desc)) + "</p>" : "") +
-      statusBlocks(it, "") +
+      projReportHTML(x) +
       '<div class="dl-nav"><button type="button" data-nav="prev"' + (idx === 0 ? " disabled" : "") + ">" + svgArrow("right") + "הקודם</button>" +
       '<span class="dl-pos">' + (idx + 1) + " מתוך " + total + "</span>" +
       '<button type="button" data-nav="next"' + (idx === total - 1 ? " disabled" : "") + ">הבא" + svgArrow("left") + "</button></div>" +
@@ -1376,9 +1955,18 @@ html.snap{scroll-snap-type:y proximity}
       method: opts.body ? "POST" : "GET",
       headers: { apikey: BACKEND.key, Authorization: "Bearer " + BACKEND.key, "Content-Type": "application/json" },
       body: opts.body ? JSON.stringify(opts.body) : undefined
-    }).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); });
+    }).then(function (r) {
+      if (!r.ok) return Promise.reject(r.status);
+      return r.text().then(function (t) { return t ? JSON.parse(t) : null; });
+    });
   }
   function normalize(d) {
+    if (!Array.isArray(d.reports)) d.reports = JSON.parse(embedded).reports || [];
+    d.reports.forEach(function (r) {
+      r.entries = r.entries || []; r.decisions = r.decisions || [];
+      ["bottom", "next"].forEach(function (k) { if (r[k] == null) r[k] = ""; });
+      r.entries.forEach(function (e) { ["name", "tag", "pid", "status", "snap", "done", "doing", "next"].forEach(function (k) { if (e[k] == null) e[k] = ""; }); });
+    });
     d.sections.forEach(function (s) { s.items.forEach(function (it) {
       if (it.budget && !it.budgetOnce) it.budgetOnce = it.budget;
       delete it.budget;
@@ -1492,6 +2080,14 @@ html.snap{scroll-snap-type:y proximity}
       } else render();
       return;
     }
+    var rs = e.target.closest("[data-rsel]");
+    if (rs) { var rv = rs.getAttribute("data-rsel"); rf = rv === "__all" ? { mode: "all" } : { mode: "one", id: rv }; saveRf(); render(); return; }
+    var rj = e.target.closest("[data-rjump]");
+    if (rj) { var rt = document.getElementById(rj.getAttribute("data-rjump")); if (rt) rt.scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" }); return; }
+    if (editing) {
+      var ra = e.target.closest("[data-ract]"); if (ra) { reportAct(ra); return; }
+      var sa = e.target.closest("[data-sact]"); if (sa) { sectionAct(sa); return; }
+    }
     var sc = e.target.closest("[data-scene]");
     if (sc) { var tgt = document.getElementById("sc-" + sc.getAttribute("data-scene")); if (tgt) tgt.scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" }); return; }
     if (!editing) { var o = e.target.closest("[data-open]"); if (o) openCard(o.getAttribute("data-open")); return; }
@@ -1526,8 +2122,24 @@ html.snap{scroll-snap-type:y proximity}
     var tmp = s.items[i]; s.items[i] = s.items[j]; s.items[j] = tmp; render();
   });
   app.addEventListener("change", function (e) {
-    var sel = e.target.closest && e.target.closest("[data-dv]");
-    if (sel) data.defaultView = sel.value;
+    var t = e.target;
+    if (!t.closest) return;
+    var sel = t.closest("[data-dv]");
+    if (sel) { data.defaultView = sel.value; return; }
+    var rd = t.closest("[data-rdate]");
+    if (rd) {
+      var keep = rf.mode === "range" ? rf : {};
+      rf = { mode: "range", from: keep.from || "", to: keep.to || "" };
+      rf[rd.getAttribute("data-rdate")] = rd.value; saveRf(); render(); return;
+    }
+    if (!editing) return;
+    var pk = t.closest("[data-rpick]");
+    if (pk) { editRid = pk.value; render(); return; }
+    var cr = curEditRep();
+    var rfld = t.closest("[data-rfield]");
+    if (rfld && cr) { if (rfld.value) cr[rfld.getAttribute("data-rfield")] = rfld.value; render(); return; }
+    var rpid = t.closest("[data-rpid]");
+    if (rpid && cr) cr.entries[+rpid.getAttribute("data-rpid")].pid = rpid.value;
   });
   app.addEventListener("keydown", function (e) {
     if (editing) return;
